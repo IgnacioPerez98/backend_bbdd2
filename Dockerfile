@@ -1,3 +1,12 @@
-#TODO();
+FROM node:lts-alpine3.16
 
-#Compose.yml , lo hacemos despues cuando levantemos el proyecto con fron + back
+WORKDIR /app
+
+COPY . .
+
+RUN mkdir /usr/local/sbin && \
+    ln -s /usr/local/bin/node /usr/local/sbin/node && \
+    yarn install
+
+CMD node app.js
+EXPOSE 3000
