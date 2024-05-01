@@ -14,6 +14,7 @@ const pool = new Pool({
 });
 
 let PostgreService = {
+        getPool : () => pool,
         /**
          * Recive el comando sql y los parametros. y devuelve una promise.
          */
