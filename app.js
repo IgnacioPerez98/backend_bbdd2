@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-
 app.use(express.json())
 
 
 //endpoints 
 const preditcionRouter = require('./endpoints/predictions')
 const signupRouter = require('./endpoints/signup');
+const teamsRouter = require('./endpoints/teams')
 
 
 
@@ -23,10 +23,7 @@ app.use(cors({
 //add Routes
 app.use('/prediction', preditcionRouter)
 app.use('/signup',signupRouter );
-
-
-//test
-app.use('/', () => "Hello Word!!!");
+app.use('/selections', teamsRouter);
 
 
 

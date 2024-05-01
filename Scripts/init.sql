@@ -17,6 +17,8 @@ create table  partidos (
     id serial primary key ,
     fecha date ,
     etapa text,
+    id_equipo1 integer,
+    id_equipo2 integer,
     id_ganador integer,
     id_perdedor integer,
     goles_ganador integer,
@@ -32,5 +34,33 @@ create table predicciones (
     goles_ganador integer,
     goles_perdedor integer
 );
+
+--Startup data
+
+
+--creo el admin
+
+--Agrego los Equipos
+INSERT INTO equipos (nombre_seleccion) VALUES 
+('Argentina'),--1
+('Perú'),--2
+('Chile'),--3
+('Canadá'),--4
+('México'),--5
+('Ecuador'),--6
+('Venezuela'),--7
+('Jamaica'),--8
+('Estados Unidos'),--9
+('Uruguay'),--10
+('Panamá'),--11
+('Bolivia'),--12
+('Brasil'),--13
+('Colombia'),--14
+('Paraguay'),--15
+('Costa Rica');--16
+
+--Ingreso los partidos
+INSERT INTO partidos (fecha, etapa) VALUES
+('2024-06-14', 'Grupo A - Match 1')
 
 
