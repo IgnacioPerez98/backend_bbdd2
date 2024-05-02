@@ -21,7 +21,7 @@ router.get('/teams', async (req,res)=>{
 /**
  * Obtain one selection providing the valid id.
  */
-router.get('teams/:id', async (req,res) => {
+router.get('/teams/:id', async (req,res) => {
     try{
         let { id } = req.params;
         if(id === undefined){

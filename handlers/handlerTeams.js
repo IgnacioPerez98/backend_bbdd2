@@ -29,7 +29,5 @@ let handlerTeams = {
             return {status : 500, error : e.toString()}
         }
     }
-
-
 }
 module.exports = handlerTeams;
