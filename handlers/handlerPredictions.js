@@ -2,6 +2,16 @@ let PostgresServide = require('../services/PostgresService')
 
 
 let handlerPredictions = {
+    /**
+     * Creates a new prediction of a match
+     * @param {*} ci 
+     * @param {*} idpartido 
+     * @param {*} id_ganador 
+     * @param {*} id_perdedor 
+     * @param {*} goles_ganador 
+     * @param {*} goles_perdedor 
+     * @returns 
+     */
     byMatchNewPrediction: async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
         try{
             let query = "INSERT INTO predicciones (ci_usuario, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) VALUES ($1,$2,$3,$4,$5,$6);";
@@ -15,6 +25,25 @@ let handlerPredictions = {
             console.error("Error adding a new predition:",e)
             return {status: 500, error: e.toString()}
         }
+    },
+    /**
+     * Updates the prediction of a determinated match
+     */
+    updateMatchPrediction : async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
+        try {
+            let sql = "UPDATE predicciones SET id_ganador = $1, id_perdedores = $2, goles_ganador = $3, goles_perdedor = $4 WHERE ci_usuario = $5 AND id_partido = $6";
+            let resultado = await PostgresServide.query(sql, [id_ganador,id_perdedor,goles_ganador,goles_perdedor, ci, idpartido]);
+            if(resultado.rowCount > 0){
+                return {status:200, message: "Prediction updated sucessfully."};
+            }else{
+                return {status: 500, error: "No rows where affected."}
+            }
+
+        }catch(e){
+            console.error("Error getting a predition:",e)
+            return {status: 500, error: e.toString()}
+        }
+
     },
     /**
      * The field id_partido is nullable, if dont have value, it return all predictions by CI, otherwise it return the specif match prediction.

@@ -1,6 +1,12 @@
 
 
 let handlerJWT = {
+    sign : async () => {
+
+    },
+    verify : async () => {
+        
+    }
 
 }
 
