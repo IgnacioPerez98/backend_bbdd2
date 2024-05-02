@@ -6,9 +6,10 @@ app.use(express.json())
 
 
 //endpoints 
-const preditcionRouter = require('./endpoints/predictions')
+const preditcionRouter = require('./endpoints/predictions');
 const signupRouter = require('./endpoints/signup');
-const teamsRouter = require('./endpoints/teams')
+const teamsRouter = require('./endpoints/teams');
+const matchesRouter = require('./endpoints/matches');
 
 
 
@@ -21,9 +22,10 @@ app.use(cors({
 
 
 //add Routes
-app.use('/prediction', preditcionRouter)
+app.use('/prediction', preditcionRouter);
 app.use('/signup',signupRouter );
 app.use('/selections', teamsRouter);
+app.use('/matches', matchesRouter);
 
 
 

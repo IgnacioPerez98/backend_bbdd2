@@ -13,8 +13,29 @@ let hanlderMatches = {
             }
 
         }catch(e){
-            return {status: 500, error : e.toString()}
+            console.error("Error loading match data: ",e)
+            return {status: 500, error : e.toString()};
         }
+    },
+    /**
+     * Recives an id_partido, and returns the according datetime(timestamp)
+     */
+    getMatchDate : async (id_partido) => {
+        try{
+            let query = "SELECT fecha FROM partidos WHERE id = $1";
+            let result = await PostgresService.query(query, [id_partido])
+            if(result.rowCount > 0){
+                return {status: 200, time: result.rows[0] };
+            }else{
+                return {status: 500, error : "The system cant load the result of the match."}
+            }
+
+        }catch(e){
+            console.error("Error getting match data: ",e);
+            return {status: 500, error : e.toString()};
+
+        }
+
     }
 }
 module.exports = hanlderMatches;
