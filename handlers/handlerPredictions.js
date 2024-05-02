@@ -1,4 +1,4 @@
-let PostgresServide = require('../services/PostgresService')
+let PostgresService = require('../services/PostgresService')
 
 
 let handlerPredictions = {
@@ -15,7 +15,7 @@ let handlerPredictions = {
     byMatchNewPrediction: async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
         try{
             let query = "INSERT INTO predicciones (ci_usuario, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) VALUES ($1,$2,$3,$4,$5,$6);";
-            let resultado = await PostgresServide.query(query, [ci,idpartido,id_ganador, id_perdedor, goles_ganador,goles_perdedor]);
+            let resultado = await PostgresService.query(query, [ci,idpartido,id_ganador, id_perdedor, goles_ganador,goles_perdedor]);
             if(resultado.rowCount > 0){
                 return {status:200, message: "Prediction added sucessfully."};
             }else{
@@ -29,21 +29,44 @@ let handlerPredictions = {
     /**
      * Updates the prediction of a determinated match
      */
-    updateMatchPrediction : async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
+    updateMatchPrediction: async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
         try {
-            let sql = "UPDATE predicciones SET id_ganador = $1, id_perdedores = $2, goles_ganador = $3, goles_perdedor = $4 WHERE ci_usuario = $5 AND id_partido = $6";
-            let resultado = await PostgresServide.query(sql, [id_ganador,id_perdedor,goles_ganador,goles_perdedor, ci, idpartido]);
-            if(resultado.rowCount > 0){
-                return {status:200, message: "Prediction updated sucessfully."};
-            }else{
-                return {status: 500, error: "No rows where affected."}
+            let sql = "UPDATE predicciones SET ";
+            let params = [];
+            let paramIndex = 1;
+    
+            if (id_ganador !== undefined) {
+                sql += "id_ganador = $" + paramIndex++ + ", ";
+                params.push(id_ganador);
             }
-
-        }catch(e){
-            console.error("Error getting a predition:",e)
-            return {status: 500, error: e.toString()}
+            if (id_perdedor !== undefined) {
+                sql += "id_perdedores = $" + paramIndex++ + ", ";
+                params.push(id_perdedor);
+            }
+            if (goles_ganador !== undefined) {
+                sql += "goles_ganador = $" + paramIndex++ + ", ";
+                params.push(goles_ganador);
+            }
+            if (goles_perdedor !== undefined) {
+                sql += "goles_perdedor = $" + paramIndex++ + ", ";
+                params.push(goles_perdedor);
+            }
+            sql = sql.replace(/,\s*$/, '');
+    
+            sql += " WHERE ci_usuario = $" + paramIndex++ + " AND id_partido = $" + paramIndex++;
+            params.push(ci, idpartido);
+    
+            let resultado = await PostgresService.query(sql, params);
+            if (resultado.rowCount > 0) {
+                return { status: 200, message: "Prediction updated successfully." };
+            } else {
+                return { status: 500, error: "No rows were affected." };
+            }
+    
+        } catch (e) {
+            console.error("Error updating a prediction:", e);
+            return { status: 500, error: e.toString() };
         }
-
     },
     /**
      * The field id_partido is nullable, if dont have value, it return all predictions by CI, otherwise it return the specif match prediction.
@@ -53,7 +76,7 @@ let handlerPredictions = {
             let query = id_partido? "SELECT * FROM predicciones WHERE ci = $1  "
             :"SELECT * FROM predicciones WHERE ci = $1 AND id_partido = $2";
             let params = id_partido? [ci]:[ci, id_partido];
-            let resultado = await PostgresServide.query(query, params);
+            let resultado = await PostgresService.query(query, params);
             if(resultado.rowCount > 0){
                 let pred = []
                 resultado.rows.forEach(
@@ -79,7 +102,7 @@ let handlerPredictions = {
     deletePredictionByMatchNumber : async (ci, id_partido) => {
         try{
             let query = "DELETE FROM predicciones WHERE ci = $1 AND id_partido = $2";
-            let resultado = await PostgresServide.query(query, [ci,id_partido]);
+            let resultado = await PostgresService.query(query, [ci,id_partido]);
             if(resultado.rowCount > 0){
                 return {status:200, message: "The prediction was successfully deleted."};
             }else{
