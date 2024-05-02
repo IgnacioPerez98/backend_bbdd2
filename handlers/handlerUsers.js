@@ -1,6 +1,5 @@
 
 const PostgreService = require('../services/PostgresService');
-const errorMessagges = require('../services/errorsmessages');
 
 
 let hanlderUsers = {
@@ -13,13 +12,13 @@ let hanlderUsers = {
             if(res.rowCount > 0){
                 return {status: 200};
             }
-            return {status:500, message: "No rows where affected"};
+            return {status:400, message: "No rows where affected"};
         }catch(error){
             return {status:500, message: error};
 
         }
     },
-    
+
 }
 
 module.exports = hanlderUsers;
