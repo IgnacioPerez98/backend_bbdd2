@@ -18,7 +18,8 @@ let hanlderUsers = {
             return {status:500, message: error};
 
         }
-    }
+    },
+    
 }
 
 module.exports = hanlderUsers;
