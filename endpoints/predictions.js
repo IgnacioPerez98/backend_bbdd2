@@ -5,7 +5,7 @@ const errors = require('../services/errorsmessages');
 
 //crud preditions
 
-router.post('/', async (req, res, next) => {
+router.post('/predict', async (req, res, next) => {
   try{
     let {id, ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     if (
@@ -31,15 +31,15 @@ router.post('/', async (req, res, next) => {
     return res.status(500).json(errors(500, e.toString()))
   }
 });
-router.patch('/', (req, res, next) => {
-  //controlar que sea una hora antes del partido
+router.patch('/predict', (req, res, next) => {
+  //controlar que sea una hora antes del partido(middleware)
 });
 
-router.get('/', async (req, res) => {
+router.get('/predict', async (req, res) => {
   console.log('eeaaa');
   return res.json({ tu: 'ki' });
 });
 
-router.delete('/', (req, res, next) => {});
+router.delete('/predict', (req, res, next) => {});
 
 module.exports = router;
