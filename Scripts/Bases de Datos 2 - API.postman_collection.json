@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": \"Nacho\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 34,\n    \"id_subchampion\": 32\n}",
+							"raw": "{\n    \"ci\": 49765166,\n    \"pass\": \"Crack\",\n    \"id_champion\": 34,\n    \"id_subchampion\": 32\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -76,6 +76,126 @@
 								"selections",
 								"teams",
 								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Predictions",
+			"item": [
+				{
+					"name": "CreateAPrediction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\" : 49765166,\n    \"id_partido\": 6, \n    \"id_ganador\": 9, \n    \"id_perdedor\": 11, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/prediction/predict",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"prediction",
+								"predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAPredictionOK",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\" : 49765166,\n    \"id_partido\": 6, \n    \"goles_ganador\": 5, \n    \"goles_perdedor\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/prediction/predict",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"prediction",
+								"predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAPrediction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": 49765166\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/prediction/predict",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"prediction",
+								"predict"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePrediction",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": 49765166,\n    \"id_partido\": 6\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/prediction/predict",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"prediction",
+								"predict"
 							]
 						}
 					},
