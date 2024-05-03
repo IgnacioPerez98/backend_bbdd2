@@ -73,9 +73,9 @@ let handlerPredictions = {
      */
     getPredictionsbyMatchNumber : async (ci, id_partido = null) => {
         try{
-            let query = id_partido? "SELECT * FROM predicciones WHERE ci = $1  "
-            :"SELECT * FROM predicciones WHERE ci = $1 AND id_partido = $2";
-            let params = id_partido? [ci]:[ci, id_partido];
+            let query = id_partido==null? "SELECT * FROM predicciones WHERE ci_usuario = $1; "
+            :"SELECT * FROM predicciones WHERE ci_usuario = $1 AND id_partido = $2;";
+            let params = id_partido == null? [ci]:[ci, id_partido];
             let resultado = await PostgresService.query(query, params);
             if(resultado.rowCount > 0){
                 let pred = []
@@ -101,7 +101,7 @@ let handlerPredictions = {
      */
     deletePredictionByMatchNumber : async (ci, id_partido) => {
         try{
-            let query = "DELETE FROM predicciones WHERE ci = $1 AND id_partido = $2";
+            let query = "DELETE FROM predicciones WHERE ci_usuario = $1 AND id_partido = $2";
             let resultado = await PostgresService.query(query, [ci,id_partido]);
             if(resultado.rowCount > 0){
                 return {status:200, message: "The prediction was successfully deleted."};

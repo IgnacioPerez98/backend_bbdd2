@@ -7,9 +7,8 @@ const errors = require('../services/errorsmessages');
 
 router.post('/predict', async (req, res, next) => {
   try{
-    let {id, ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    let { ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     if (
-      id == undefined ||
       ci ==undefined ||
       id_partido ==undefined ||
       id_ganador ==undefined ||
@@ -19,7 +18,7 @@ router.post('/predict', async (req, res, next) => {
     ){
       return res.status(400).json(errors(400, "One of the params was not valid, check the body of the request."))
     }
-    let resultado = await handlerPredictions.byMatchNewPrediction(ci,id,id_ganador,id_perdedor,goles_ganador,goles_perdedor);
+    let resultado = await handlerPredictions.byMatchNewPrediction(ci,id_partido,id_ganador,id_perdedor,goles_ganador,goles_perdedor);
     if(resultado.status == 200){
         return  res.status(resultado.status).json(errors(resultado.status,resultado.message));
     }else{
@@ -36,17 +35,12 @@ router.post('/predict', async (req, res, next) => {
  * Patch an already created prediction.
  */
 router.patch('/predict', async (req, res) => {
-  //controlar que sea una hora antes del partido(middleware)
   try{
-    let {id, ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    let {ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    //The other values are checked when the handler join the sql statement.
     if (
-      id == undefined ||
-      ci ==undefined ||
-      id_partido ==undefined ||
-      id_ganador ==undefined ||
-      id_perdedor ==undefined ||
-      goles_ganador ==undefined ||
-      goles_perdedor ==undefined
+      id_partido == undefined ||
+      ci ==undefined 
     ){
       return res.status(400).json(errors(400, "One of the params was not valid, check the body of the request."))
     }
@@ -67,10 +61,9 @@ router.get('/predict', async (req, res) => {
   try{
     let {ci, id_partido} = req.body;
     if(
-      ci == undefined ||
-      id_partido == undefined
+      ci == undefined 
     ){
-      return res.status(400).json(errors(400, "One of the params was not valid, check the body of the request."))
+      return res.status(400).json(errors(400, "Ci param was not valid, check the body of the request."))
     }
     let resultado = await handlerPredictions.getPredictionsbyMatchNumber(ci,id_partido);
     if(resultado.status ==200){
@@ -85,7 +78,7 @@ router.get('/predict', async (req, res) => {
 
 });
 
-router.delete('/predict', async (req, res, next) => {
+router.delete('/predict', async (req, res) => {
   try{
     let {ci, id_partido} = req.body;
     if(
