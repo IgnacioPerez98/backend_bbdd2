@@ -12,7 +12,9 @@ let errorMessagges = (status, errstring= "") => {
                 return { message: "The resourse was not found" , error: errstring};
             case 500:
                 return { message: "Error 500!! ", error : "Internal server error, try again."};
-        }
+            default:
+                return { message: "Error", error: errstring}  ;      
+            }
 
 }
 

@@ -1,5 +1,4 @@
-let PostgresService = require('../services/PostgresService')
-
+const PostgresService = require('../services/PostgresService')
 
 let handlerPredictions = {
     /**

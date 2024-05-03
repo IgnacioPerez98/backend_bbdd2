@@ -5,23 +5,23 @@ const router = express.Router();
 
 router.post('/results', (req, res, next)=>{
     //el admin carga los resultados
+    try{
+
+    }catch(e){
+        console.error(e);
+        return res.status(500).json(errors(500, e.toString()))
+    }
 })
 
 router.get ('/results', (req, res, next)=> {
     //refiere a los resultados de los partidos, jugados y un pendiente en los que se estan por jugar, respoinde al fixture
+    try{
+
+    }catch(e){
+        console.error(e);
+        return res.status(500).json(errors(500, e.toString()))
+    }
 })
-
-
-//Retorna los puntos que lleva sumado el usuario
-router.get('/accountpoints' , (req, res, next)=> {
-
-})
-
-//recibe la etapa de la copa por body, o param
-router.get('/scoreboards', (req,res,next)=>{
-    //retorna los puntajes totales de cada usuario
-})
-
 
 
 module.exports = router;

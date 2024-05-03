@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const handlerPredictions = require('../handlers/handlerPredictions');
 const errors = require('../services/errorsmessages');
+const hmiddleware = require('../middlewares/matchtimemidlleware')
 
 //crud preditions
 
-router.post('/predict', async (req, res, next) => {
+router.post('/predict',hmiddleware, async (req, res, next) => {
   try{
     let { ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     if (
@@ -34,7 +35,7 @@ router.post('/predict', async (req, res, next) => {
 /**
  * Patch an already created prediction.
  */
-router.patch('/predict', async (req, res) => {
+router.patch('/predict',hmiddleware, async (req, res) => {
   try{
     let {ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     //The other values are checked when the handler join the sql statement.
@@ -57,7 +58,7 @@ router.patch('/predict', async (req, res) => {
 });
 
 
-router.get('/predict', async (req, res) => {
+router.get('/predict', async (req, res,next) => {
   try{
     let {ci, id_partido} = req.body;
     if(
@@ -78,7 +79,7 @@ router.get('/predict', async (req, res) => {
 
 });
 
-router.delete('/predict', async (req, res) => {
+router.delete('/predict',hmiddleware, async (req, res) => {
   try{
     let {ci, id_partido} = req.body;
     if(
