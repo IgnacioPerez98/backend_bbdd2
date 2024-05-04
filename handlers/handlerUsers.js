@@ -18,6 +18,12 @@ let hanlderUsers = {
 
         }
     },
+    modifyPassword : async () => {
+
+    },
+    signin: async () => {
+        
+    }
 
 }
 
