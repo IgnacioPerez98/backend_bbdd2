@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "da2056c6-df04-49e2-9747-4a31e0c7c19f",
+		"_postman_id": "66000876-735b-4a35-8688-910532af1079",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "33613607"
 	},
 	"item": [
 		{
@@ -196,6 +196,81 @@
 							"path": [
 								"prediction",
 								"predict"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Matches",
+			"item": [
+				{
+					"name": "GetAllMatches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMatchByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results/1",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMatchByRange",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"from\": 1,\n    \"to\": 24\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results"
 							]
 						}
 					},
