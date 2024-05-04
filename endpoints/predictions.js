@@ -5,7 +5,6 @@ const errors = require('../services/errorsmessages');
 const hmiddleware = require('../middlewares/matchtimemidlleware')
 
 //crud preditions
-
 router.post('/predict',hmiddleware, async (req, res, next) => {
   try{
     let { ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
@@ -30,8 +29,6 @@ router.post('/predict',hmiddleware, async (req, res, next) => {
     return res.status(500).json(errors(500, e.toString()))
   }
 });
-
-
 /**
  * Patch an already created prediction.
  */
@@ -56,8 +53,6 @@ router.patch('/predict',hmiddleware, async (req, res) => {
     return res.status(500).json(errors(500, e.toString()))
   }
 });
-
-
 router.get('/predict', async (req, res,next) => {
   try{
     let {ci, id_partido} = req.body;

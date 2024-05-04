@@ -10,19 +10,19 @@ const matchhourmiddleware = async(req, res, next) => {
         console.error("Middleware error 400", "You must provide a field id_partido in the body");
         return res.status(400).json(errors(400, "You must provide a field id_partido in the body"))
     }
-
     let partido = await hanlderMatches.getMatchDate(id_partido);
     if(partido.status !== 200){
         console.error("Middleware error 400", partido.error);
         return res.status(400).json(errors(400, `We cant find match with id ${id_partido}`))
     }
-    let {time} = partido
+    let {match} = partido
+    if(match == undefined){
+        return res.status(400).json(errors(400, `We cant find match with id ${id_partido}`))
+    }
     let horaActual = new Date(Date.now()).getTime();
-    let horaPartido = new Date(Date.parse(time.fecha)).getTime();
+    let horaPartido = new Date(Date.parse(match.fecha)).getTime();
     //let timeN = new Date(2024,5,22,18,10,0,0).getTime() //para test
     let difHora = dif_hours(horaPartido,horaActual);
-
-
     if(difHora > 1){
         next();
     }else{
