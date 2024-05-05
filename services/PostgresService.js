@@ -13,6 +13,8 @@ const pool = new Pool({
     database: process.env.dbname || 'backend'
 });
 
+
+
 let PostgreService = {
         getPool : () => pool,
         /**

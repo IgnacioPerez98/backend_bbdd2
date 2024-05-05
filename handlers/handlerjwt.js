@@ -16,6 +16,7 @@ let handlerJWT = {
     decodeandverify : async (token) => {
         try{
             let result = jwt.verify(token,process.env.jwtsecret )
+            let decoded = jwt.decode(token, {complete: true});
         }catch(e){
             console.error("Error signing user token",e);
             return {status: 500, error: e.toString()}

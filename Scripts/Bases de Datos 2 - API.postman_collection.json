@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "66000876-735b-4a35-8688-910532af1079",
+		"_postman_id": "ec896989-5964-4472-973d-35645d2f1d16",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33613607"
+		"_exporter_id": "26276677"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 49765166,\n    \"pass\": \"Crack\",\n    \"id_champion\": 34,\n    \"id_subchampion\": 32\n}",
+							"raw": "{\n    \"ci\": 1,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,7 +115,7 @@
 					"response": []
 				},
 				{
-					"name": "UpdateAPredictionOK",
+					"name": "UpdateAPrediction",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -207,6 +207,34 @@
 			"name": "Matches",
 			"item": [
 				{
+					"name": "InsertMatchResult",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GetAllMatches",
 					"request": {
 						"method": "GET",
@@ -271,6 +299,49 @@
 							"path": [
 								"matches",
 								"results"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ScoreBoards",
+			"item": [
+				{
+					"name": "getAllUsersPoints",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/scoreboards/allpoints",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"scoreboards",
+								"allpoints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPointsByUsername",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/scoreboards/accountpoints",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"scoreboards",
+								"accountpoints"
 							]
 						}
 					},
