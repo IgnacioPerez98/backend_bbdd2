@@ -45,6 +45,7 @@ create table puntos (
 
 
 --creo el admin
+INSERT INTO usuario (ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
 
 --Agrego los Equipos
 INSERT INTO equipos (nombre_seleccion) VALUES 

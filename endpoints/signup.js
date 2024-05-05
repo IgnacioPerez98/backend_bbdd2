@@ -29,15 +29,4 @@ router.post('/user', async (req, res) => {
         return res.status(500).json(errors(500, e.toString()))
     }
 })
-
-router.patch('/user', (req, res, next) => {
-
-
-})
-
-router.get('/user', (req, res, next)=> {
-
-})
-
-
 module.exports = router;
