@@ -3,27 +3,34 @@ const environ = require('dotenv')
 environ.config()
 
 let handlerJWT = {
-    sign : async (ci,esadmin) => {
+    sign : (ci,esadmin) => {
         try{
-            
-            jwt.sign({ci:ci, esadmin :esadmin},process.env.jwtsecret,{algorithm: 'RS512'})
+           let token = jwt.sign({ci:ci, esadmin :esadmin, resigncount: 0},process.env.jwtsecret,{expiresIn: '1h' , algorithm: 'HS512'})
+           if(token !== undefined){
+                return {status :200, token: token};
+           }else{
+            return {status : 500, message: "Server cuol not sign the token" }
+           }
 
         }catch(e){
             console.error("Error signing user token",e);
             return {status: 500, error: e.toString()}
         }
     },
-    decodeandverify : async (token) => {
+    /**
+     * Verify and obtain the claims of the token. 
+     * @param {*} token 
+     * @returns 200 if the token is valid, 403 if it is incorrect.
+     */
+    decodeandverify : (token) => {
         try{
-            let result = jwt.verify(token,process.env.jwtsecret )
-            let decoded = jwt.decode(token, {complete: true});
+            let claims = jwt.verify(token,process.env.jwtsecret )
+            return { status: 200, claims: claims};
         }catch(e){
             console.error("Error signing user token",e);
-            return {status: 500, error: e.toString()}
-        }
-        
+            return {status: 403, error: e.message}
+        }        
     }
-
 }
 
 

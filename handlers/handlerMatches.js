@@ -116,6 +116,9 @@ let hanlderMatches = {
             console.error(e);
             return {status: 500, error : e.toString()};
         }
+    },
+    advanceTournamentStage: async (id_partido) =>{
+        
     }
 }
 module.exports = hanlderMatches;
