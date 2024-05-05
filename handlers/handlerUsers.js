@@ -3,7 +3,6 @@ const PostgreService = require('../services/PostgresService');
 
 
 let hanlderUsers = {
-
     createUser  : async (ci,username, pass, champion, subchampion) => {
         try{
             const query = "INSERT INTO usuario ( ci, username, contrasena, id_campeon, id_subcampeon,es_admin) VALUES ($1, $2 , $3 ,$4 , $5, 0);";

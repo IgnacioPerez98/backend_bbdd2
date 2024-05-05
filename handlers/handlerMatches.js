@@ -117,8 +117,124 @@ let hanlderMatches = {
             return {status: 500, error : e.toString()};
         }
     },
-    advanceTournamentStage: async (id_partido) =>{
-        
+    registerTournamentAdvance: async (id_partido) => {
+        switch(id_partido){
+            case 18://Fin Group A
+                break;
+            case 20://Fin Group B
+                break;
+            case 22://Fin Group C
+                break;
+            case 24://Fin Group D
+                break;
+            case 25: //Quarter 1 
+                break;
+            case 26: //Quarter 2 
+                break;
+            case 27: //Quarter 3 
+                break;
+            case 28: //Quarter 4 
+                break;
+            case 29 ://Semis 1
+                break;
+            case 30 ://Semis 2
+                break;
+
+        }
+        try{
+            
+
+        }catch(error){
+            console.error("Error updating tournament fase: ",error);
+            return { status : 500 , error:error.message };
+        }
+
     }
 }
 module.exports = hanlderMatches;
+
+//private method to asign the winner of each group
+/**
+ * Si seteo el id_equipo1 en null , inserta solo el equipo 2 , si idequipo1 tiene valor, solo inserta este.
+ * @param {*} id_partido 
+ * @param {*} id_equipo1 
+ * @param {*} id_equipo2 
+ * @returns 
+ */
+const setFinalMatchTeams = async (con ,id_partido,id_equipo1, id_equipo2) =>{
+    try{
+        let sql = id_equipo1 === null?
+        `INSERT INTO partidos (id_equipo2) VALUES ($2) WHERE id = $3;`:
+        `INSERT INTO partidos (id_equipo1) VALUES ($1) WHERE id = $3;`;
+        let param = [];
+        if(id_equipo1 === null){
+            param. push(id_equipo2)
+        }else{
+            param. push(id_equipo1)
+        }
+        param.push(id_partido);
+        let resultado = await con.query(sql, param)
+        if(resultado.rowCount > 0 ){
+            return {status: 200, message: "Correct"}
+        }else{
+            return {status:400, error: "No rows where affected."}
+        }
+
+    }catch(errors){
+        console.error("Error updating match data ", errors)
+        return {status: 500, error: errors.message}
+    }
+    
+}
+
+
+const getWinnersofTeams = (con , etapa) => {
+    try{
+
+        let sql = `WITH TeamPoints AS (
+            SELECT 
+                id_equipo,
+                SUM(CASE 
+                        WHEN id_ganador = id_equipo THEN 3 -- If the team won, assign 3 points
+                        WHEN id_ganador IS NULL THEN 1 -- If it's a draw, assign 1 point
+                        ELSE 0 -- If the team lost, assign 0 points
+                    END) AS puntos,
+                SUM(CASE 
+                        WHEN id_ganador = id_equipo THEN goles_ganador - goles_perdedor -- If the team won, calculate goal difference
+                        WHEN id_ganador IS NULL THEN 0 -- If it's a draw, goal difference is 0
+                        ELSE goles_perdedor - goles_ganador -- If the team lost, calculate goal difference (negative)
+                    END) AS diferencia_goles
+            FROM 
+                partidos
+            WHERE 
+                id <= 16 -- Considering only the qualifying matches
+            GROUP BY 
+                id_equipo
+        )
+        SELECT 
+            id_equipo,
+            puntos,
+            diferencia_goles
+        FROM 
+            TeamPoints
+        ORDER BY 
+            puntos DESC, 
+            diferencia_goles DESC
+        LIMIT 2;
+        `;
+        
+
+    }catch(e){
+        console.error("Error getting the winner",e)
+    }
+}
+
+
+let Etapa = {
+    GrupoA : "Grupo A",
+    GrupoB : "Grupo B",
+    GrupoC : "Grupo C",
+    GrupoD : "Grupo D",
+    
+
+}
