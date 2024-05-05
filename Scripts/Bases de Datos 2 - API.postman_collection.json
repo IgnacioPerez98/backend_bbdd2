@@ -36,8 +36,65 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "SignIn-GetToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ci\": 1,\r\n    \"hashedpass\": \"Crack\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/signin/signin",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"signin",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn- ChangePassword",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ci\":1,\r\n    \"pass\": \"doblementeCrack\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/signin/changepass",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"signin",
+								"changepass"
+							]
+						}
+					},
+					"response": []
 				}
-			]
+			],
+			"description": "Handle the logic of the request related to create a new user, and give acces to the app"
 		},
 		{
 			"name": "Teams",
