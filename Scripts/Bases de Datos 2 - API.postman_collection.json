@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "bbe69be3-7ae8-44c8-ac1d-c00d05e737d8",
+		"_postman_id": "ec896989-5964-4472-973d-35645d2f1d16",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "26276677"
 	},
 	"item": [
 		{
@@ -115,7 +115,7 @@
 					"response": []
 				},
 				{
-					"name": "UpdateAPredictionOK",
+					"name": "UpdateAPrediction",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -299,6 +299,49 @@
 							"path": [
 								"matches",
 								"results"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ScoreBoards",
+			"item": [
+				{
+					"name": "getAllUsersPoints",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/scoreboards/allpoints",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"scoreboards",
+								"allpoints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPointsByUsername",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/scoreboards/accountpoints",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"scoreboards",
+								"accountpoints"
 							]
 						}
 					},

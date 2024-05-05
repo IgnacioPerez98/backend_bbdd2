@@ -1,6 +1,4 @@
 const PostgresService = require('../services/PostgresService')
-const errors = require('../services/errorsmessages')
-
 
 let handlerScoreBoards = {
     getPointsByUser : async (ci_usuario) => {
@@ -23,7 +21,7 @@ let handlerScoreBoards = {
             if(resultado.rowCount > 0){
                 return {status: 200, scoreboards: resultado.rows};
             }
-            return {status:400, message: "No rows where affected"};
+            return {status:400, message: "The query dont have data asosiated"};
         }catch(e){
             console.error("Error getting the scoreboard by user.",e);
             return {status: 500, error: e.toString()}
@@ -71,7 +69,7 @@ let handlerScoreBoards = {
                 //execute the statement that set 2 extras point to users that have aserted the result
                 await c.query(points4,[id_partido]);
                 await c.query('COMMIT');
-                if(id_partido == 32){
+                if(id_partido == 32){//final match
                     asignPointChampionAndSubChampion();
                 }
 
@@ -119,8 +117,6 @@ const asignPointChampionAndSubChampion = async () => {
             await c.query(query)
 
             await c.query('COMMIT')
-    
-
         }catch(transactError){
             console.error("Transact error: ", transactError);
             c.query("ROLLBACK")

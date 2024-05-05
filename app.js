@@ -10,6 +10,7 @@ const preditcionRouter = require('./endpoints/predictions');
 const signupRouter = require('./endpoints/signup');
 const teamsRouter = require('./endpoints/teams');
 const matchesRouter = require('./endpoints/matches');
+const scoreboardRoute = require('./endpoints/scoreboards')
 
 
 
@@ -26,6 +27,7 @@ app.use('/prediction', preditcionRouter);
 app.use('/signup',signupRouter );
 app.use('/selections', teamsRouter);
 app.use('/matches', matchesRouter);
+app.use('/scoreboards', scoreboardRoute);
 
 
 
