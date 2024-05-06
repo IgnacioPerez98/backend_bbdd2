@@ -12,7 +12,9 @@ const authmiddleware = (req, res, next) => {
         //extract the claims
         let tokendata = handlerjwt.decodeandverify(token);
         if(tokendata==200){
-            next();
+            let {claims} = tokendata;
+            req.claims = claims
+            res.send(req.claims)//envio los claims del token an next middleware
         }else{
             return res.status(tokendata.status).json({error: tokendata.error})
         }

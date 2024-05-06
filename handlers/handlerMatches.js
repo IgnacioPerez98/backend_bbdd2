@@ -3,18 +3,45 @@ const PostgresService = require('../services/PostgresService')
 
 let hanlderMatches = {
     loadDataFinishedMatch : async (num_partido,id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
-        try{        
-            let query = "UPDATE partidos SET id_ganador = $1, id_perdedor = $2, goles_ganador = $3, goles_perdedor = $4 WHERE id = $5;"
-            let result = await PostgresService.query(query, [id_ganador,id_perdedor,goles_ganador,goles_perdedor,num_partido]);
-            if(result.rowCount > 0){
-                return {status: 200, message: `The result of the match ${num_partido},was load correctly.`  };
-            }else{
-                return {status: 500, error : "The system cant load the result of the match."}
+        try{       
+            let con = await PostgresService.getPool().connect(); 
+            try{
+                await con.query('BEGIN');
+                //Insert the result of the match
+                let query = "UPDATE partidos SET id_ganador = $1, id_perdedor = $2, goles_ganador = $3, goles_perdedor = $4 WHERE id = $5;"
+                let result = await con.query(query,[id_ganador,id_perdedor,goles_ganador,goles_perdedor,num_partido] )
+                if(result.rowCount <= 0){
+                    throw new Error("The system cant load the result of the match. No rows where affected.")
+                }
+                
+                //insert the update on the table posiciones
+                let is_draw = goles_ganador === goles_perdedor;
+                let sql = "";
+                let params = []
+                if(is_draw){
+                    sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo= $2);`;
+                    params.push(id_ganador)
+                    params.push(id_perdedor)
+                    let result = await con.query(sql,[id_ganador,id_perdedor])
+                    if(result.rowCount <= 0){
+                        throw new Error("The system cant change the points. No rows where affected.")
+                    }
+                }else{
+                    sql = `UPDATE posiciones SET puntos = puntos +3 WHERE id_equipo = $1;`
+                    params.push(id_ganador);
+                    let result = await con.query(sql, params);
+                    if(result.rowCount <= 0){
+                        throw new Error("The system cant change the points. No rows where affected.")
+                    }
+                }
+                await con.query('COMMIT');
+            }catch(transactError){
+                console.error("Error loading match results: ",transactError)
+                await con.query('ROLLBACK')
             }
-
         }catch(e){
             console.error("Error loading match data: ",e)
-            return {status: 500, error : e.toString()};
+            return {status: 500, error : e.message};
         }
     },
     /**
@@ -154,13 +181,8 @@ let hanlderMatches = {
 module.exports = hanlderMatches;
 
 //private method to asign the winner of each group
-/**
- * Si seteo el id_equipo1 en null , inserta solo el equipo 2 , si idequipo1 tiene valor, solo inserta este.
- * @param {*} id_partido 
- * @param {*} id_equipo1 
- * @param {*} id_equipo2 
- * @returns 
- */
+// Si seteo el id_equipo1 en null , inserta solo el equipo 2 , si idequipo1 tiene valor, solo inserta este.
+
 const setFinalMatchTeams = async (con ,id_partido,id_equipo1, id_equipo2) =>{
     try{
         let sql = id_equipo1 === null?
@@ -185,57 +207,4 @@ const setFinalMatchTeams = async (con ,id_partido,id_equipo1, id_equipo2) =>{
         return {status: 500, error: errors.message}
     }
     
-}
-
-
-const getWinnersofTeams = async (con , etapa) => {
-    try{
-
-        let sql = `WITH TeamPoints AS (
-            SELECT 
-                partidos.id,
-                SUM(CASE 
-                        WHEN id_ganador = partidos.id AND NOT(goles_ganador = goles_perdedor) THEN 3 -- If the team won, assign 3 points
-                        WHEN goles_ganador = goles_perdedor THEN 1 -- If it's a draw, assign 1 point
-                        ELSE 0 -- If the team lost, assign 0 points
-                    END) AS puntos,
-                SUM(CASE 
-                        WHEN id_ganador = partidos.id THEN goles_ganador - goles_perdedor -- If the team won, calculate goal difference
-                        WHEN id_ganador IS NULL THEN 0 -- If it's a draw, goal difference is 0
-                        ELSE goles_perdedor - goles_ganador -- If the team lost, calculate goal difference (negative)
-                    END) AS diferencia_goles
-            FROM 
-                partidos
-            WHERE 
-                partidos.id <= 24 -- Considering only the qualifying matches
-            GROUP BY 
-                partidos.id
-        )
-        SELECT 
-            partidos.id,
-            puntos,
-            diferencia_goles
-        FROM 
-            TeamPoints,partidos
-        ORDER BY 
-            puntos DESC, 
-            diferencia_goles DESC
-        LIMIT 2;
-        `;
-        await con.query(sql);
-        
-
-    }catch(e){
-        console.error("Error getting the winner",e)
-    }
-}
-
-
-let Etapa = {
-    GrupoA : "Grupo A",
-    GrupoB : "Grupo B",
-    GrupoC : "Grupo C",
-    GrupoD : "Grupo D",
-    
-
 }
