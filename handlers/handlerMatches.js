@@ -188,40 +188,41 @@ const setFinalMatchTeams = async (con ,id_partido,id_equipo1, id_equipo2) =>{
 }
 
 
-const getWinnersofTeams = (con , etapa) => {
+const getWinnersofTeams = async (con , etapa) => {
     try{
 
         let sql = `WITH TeamPoints AS (
             SELECT 
-                id_equipo,
+                partidos.id,
                 SUM(CASE 
-                        WHEN id_ganador = id_equipo THEN 3 -- If the team won, assign 3 points
-                        WHEN id_ganador IS NULL THEN 1 -- If it's a draw, assign 1 point
+                        WHEN id_ganador = partidos.id AND NOT(goles_ganador = goles_perdedor) THEN 3 -- If the team won, assign 3 points
+                        WHEN goles_ganador = goles_perdedor THEN 1 -- If it's a draw, assign 1 point
                         ELSE 0 -- If the team lost, assign 0 points
                     END) AS puntos,
                 SUM(CASE 
-                        WHEN id_ganador = id_equipo THEN goles_ganador - goles_perdedor -- If the team won, calculate goal difference
+                        WHEN id_ganador = partidos.id THEN goles_ganador - goles_perdedor -- If the team won, calculate goal difference
                         WHEN id_ganador IS NULL THEN 0 -- If it's a draw, goal difference is 0
                         ELSE goles_perdedor - goles_ganador -- If the team lost, calculate goal difference (negative)
                     END) AS diferencia_goles
             FROM 
                 partidos
             WHERE 
-                id <= 16 -- Considering only the qualifying matches
+                partidos.id <= 24 -- Considering only the qualifying matches
             GROUP BY 
-                id_equipo
+                partidos.id
         )
         SELECT 
-            id_equipo,
+            partidos.id,
             puntos,
             diferencia_goles
         FROM 
-            TeamPoints
+            TeamPoints,partidos
         ORDER BY 
             puntos DESC, 
             diferencia_goles DESC
         LIMIT 2;
         `;
+        await con.query(sql);
         
 
     }catch(e){
