@@ -11,7 +11,7 @@ create table  usuario (
     contrasena text not null,
     id_campeon integer,
     id_subcampeon integer,
-    es_admin integer
+    es_admin integer default 0
 );
 
 create table  partidos (
@@ -23,7 +23,9 @@ create table  partidos (
     id_ganador integer,
     id_perdedor integer,
     goles_ganador integer,
-    goles_perdedor integer
+    goles_perdedor integer,
+    penales_ganador integer,
+    penales_perdedor integer
 );
 
 create table predicciones (
@@ -36,18 +38,24 @@ create table predicciones (
     goles_perdedor integer
 );
 
+--refers to users points
 create table puntos (
     ci_usuario integer primary key,
     puntos integer default 0
 );
 
+create table posiciones (
+    id_equipo integer primary key,
+    puntos integer not null default 0, 
+    diferenciagoles integer not null default 0
+);
 
 
 --Startup data
 
 
 --creo el admin
---INSERT INTO usuario (ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
+--INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
 
 --Agrego los Equipos
 INSERT INTO equipos (nombre_seleccion) VALUES 
@@ -67,6 +75,25 @@ INSERT INTO equipos (nombre_seleccion) VALUES
 ('Colombia'),--14
 ('Paraguay'),--15
 ('Costa Rica');--16
+
+--insert the temams in the table of positions, to simplify the sql query
+INSERT INTO posiciones (id_equipo, puntos, diferenciagoles) VALUES
+(1, 0 , 0),
+(2, 0 , 0),
+(3, 0 , 0),
+(4, 0 , 0),
+(5, 0 , 0),
+(6, 0 , 0),
+(7, 0 , 0),
+(8, 0 , 0),
+(9, 0 , 0),
+(10, 0 , 0),
+(11, 0 , 0),
+(12, 0 , 0),
+(13, 0 , 0),
+(14, 0 , 0),
+(15, 0 , 0),
+(16, 0 , 0);
 
 --Ingreso los partidos
 --https://copaamerica.com/calendario-de-partidos/
