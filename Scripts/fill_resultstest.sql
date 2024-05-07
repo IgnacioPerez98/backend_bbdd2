@@ -34,3 +34,22 @@ UPDATE partidos SET id_ganador = 12, id_perdedor = 10, goles_ganador = 4, goles_
 UPDATE partidos SET id_ganador = 29, id_perdedor = 30, goles_ganador = 3, goles_perdedor = 1 WHERE id = 31;
 UPDATE partidos SET id_ganador = 31, id_perdedor = 32, goles_ganador = 2, goles_perdedor = 0 WHERE id = 32;
 */
+
+--points mock
+INSERT INTO posiciones (id_equipo, puntos, diferenciagoles) VALUES
+(1, 9 , 0),
+(2, 3 , 0),
+(3, 1 , 0),
+(4, 0 , 0),
+(5, 7 , 3),
+(6, 7, -1),
+(7, 7 , 1),
+(8, 0 , 0),
+(9, 12 , 12),
+(10, 0 , 0),
+(11, 0 , 0),
+(12, 0 , 0),
+(13, 6 , 0),
+(14, 6 , 1),
+(15, 6 , 3),
+(16, 6 , 2);

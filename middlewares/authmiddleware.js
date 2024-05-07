@@ -11,10 +11,11 @@ const authmiddleware = (req, res, next) => {
         let token = head.split(" ").at(1);
         //extract the claims
         let tokendata = handlerjwt.decodeandverify(token);
-        if(tokendata==200){
+        if(tokendata.status ==200){
             let {claims} = tokendata;
             req.claims = claims
-            res.send(req.claims)//envio los claims del token an next middleware
+            // res.send(req.claims)//envio los claims del token an next middleware
+            next()
         }else{
             return res.status(tokendata.status).json({error: tokendata.error})
         }
