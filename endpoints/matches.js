@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const errors = require('../services/errorsmessages')
-
+const auth = require('../middlewares/authmiddleware')
 let handlerMatches = require('../handlers/handlerMatches')
 
 //el contro, de acceso es mixto, obtener resultados es publico, pero cargarlo solo puede el admin
@@ -54,7 +54,7 @@ router.get ('/results/:id_partido', async (req, res, next)=> {
 
 
 
-router.get('/results', async (req, res) => {
+router.get('/results', auth, async (req, res, next) => {
     try{
         let {from, to} = req.body;
         if (
@@ -68,13 +68,12 @@ router.get('/results', async (req, res) => {
                   return res.status(resultado.status).json(errors(resultado.status,resultado.error));
                 }
             }
-            let resultado =await handlerMatches.getMatchByRange(from, to);
-            if(resultado.status == 200){
-                return  res.status(resultado.status).json(resultado.matches);
-            }else{
-              return res.status(resultado.status).json(errors(resultado.status,resultado.error));
-            }
-
+        let resultado =await handlerMatches.getMatchByRange(from, to);
+        if(resultado.status == 200){
+            return  res.status(resultado.status).json(resultado.matches);
+        }else{
+            return res.status(resultado.status).json(errors(resultado.status,resultado.error));
+        }
     }catch(e){
         console.error("Error geting matches by range: ",e)
         return res.status(500).json(errors(500, e.toString()))

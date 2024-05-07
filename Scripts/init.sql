@@ -59,41 +59,25 @@ create table posiciones (
 
 --Agrego los Equipos
 INSERT INTO equipos (nombre_seleccion) VALUES 
-('Argentina'),--1
-('Perú'),--2
-('Chile'),--3
-('Canadá'),--4
-('México'),--5
-('Ecuador'),--6
-('Venezuela'),--7
-('Jamaica'),--8
-('Estados Unidos'),--9
-('Uruguay'),--10
-('Panamá'),--11
-('Bolivia'),--12
-('Brasil'),--13
-('Colombia'),--14
-('Paraguay'),--15
-('Costa Rica');--16
+('Argentina'),--1 GA
+('Perú'),--2 GA
+('Chile'),--3 GA
+('Canadá'),--4 GA
+('México'),--5 GB
+('Ecuador'),--6 GB
+('Venezuela'),--7 GB
+('Jamaica'),--8 GB
+('Estados Unidos'),--9 GC
+('Uruguay'),--10 GC
+('Panamá'),--11 GC
+('Bolivia'),--12 GC
+('Brasil'),--13 GD
+('Colombia'),--14 GD
+('Paraguay'),--15 GD
+('Costa Rica');--16 GD
 
 --insert the temams in the table of positions, to simplify the sql query
-INSERT INTO posiciones (id_equipo, puntos, diferenciagoles) VALUES
-(1, 0 , 0),
-(2, 0 , 0),
-(3, 0 , 0),
-(4, 0 , 0),
-(5, 0 , 0),
-(6, 0 , 0),
-(7, 0 , 0),
-(8, 0 , 0),
-(9, 0 , 0),
-(10, 0 , 0),
-(11, 0 , 0),
-(12, 0 , 0),
-(13, 0 , 0),
-(14, 0 , 0),
-(15, 0 , 0),
-(16, 0 , 0);
+q
 
 --Ingreso los partidos
 --https://copaamerica.com/calendario-de-partidos/
