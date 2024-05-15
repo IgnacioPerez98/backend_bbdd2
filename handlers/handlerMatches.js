@@ -1,5 +1,6 @@
 const { Query } = require("pg");
 const PostgresService = require("../services/PostgresService");
+const { param } = require("../endpoints/signup");
 
 let hanlderMatches = {
   loadDataFinishedMatch: async (
@@ -185,6 +186,17 @@ let hanlderMatches = {
   },
   registerTournamentAdvance: async (id_partido) => {
     try {
+        let c = await PostgresService.getPool().connect();
+        let winner = await getWinnerByStage(c,id_partido);
+        let {result} = winner;
+        let team1 = result[0].id_equipo;
+        let team2 = result[1].id_equipo;
+
+        let setFinals = await setTeamsFinalStage(c, team1, team2,id_partido);
+
+
+
+        return result;
     } catch (error) {
       console.error("Error updating tournament fase: ", error);
       return { status: 500, error: error.message };
@@ -193,38 +205,26 @@ let hanlderMatches = {
 };
 module.exports = hanlderMatches;
 
-//private method to asign the winner of each group
-// Si seteo el id_equipo1 en null , inserta solo el equipo 2 , si idequipo1 tiene valor, solo inserta este.
-//deprecate
-const setFinalsMatchTeams = async (con, id_partido, id_equipo1, id_equipo2) => {
-  try {
-    let sql =
-      id_equipo1 === null
-        ? `INSERT INTO partidos (id_equipo2) VALUES ($2) WHERE id = $3;`
-        : `INSERT INTO partidos (id_equipo1) VALUES ($1) WHERE id = $3;`;
-    let param = [];
-    if (id_equipo1 === null) {
-      param.push(id_equipo2);
-    } else {
-      param.push(id_equipo1);
-    }
-    param.push(id_partido);
-    let resultado = await con.query(sql, param);
-    if (resultado.rowCount > 0) {
-      return { status: 200, message: "Correct" };
-    } else {
-      return { status: 400, error: "No rows where affected." };
-    }
-  } catch (errors) {
-    console.error("Error updating match data ", errors);
-    return { status: 500, error: errors.message };
-  }
-};
 
 const setTeamsFinalStage = async (con, id_equipo1, id_equipo2, id_partido) => {
   try {
-    let sql = `UPDATE partidos SET id_equipo1 = $1, id_equipo2 = $2 WHERE id_partido = $3;`;
-    let resultado = await con.query(sql, [id_equipo1, id_equipo2, id_partido]);
+    let sql = `UPDATE partidos SET `;
+    let params = [];
+    let counter = 1;
+    if (id_equipo1 !== null){
+      sql += `id_equipo1 = $${counter} `;
+      params.push(id_equipo1);
+      counter ++;
+    }
+    if (id_equipo2 !== null){
+      sql += counter==2? ``:`, `;
+      sql += `id_equipo2 = $${counter}`;
+      params.push(id_equipo2);
+      counter++;
+    }
+    sql += ` WHERE id_partido = $${counter};`; 
+    params.push(id_partido);
+    let resultado = await con.query(sql, params);
     if (resultado.rowCount > 0) {
       return { status: 200, message: "Correct" };
     } else {

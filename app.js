@@ -27,7 +27,11 @@ app.use('/matches', matchesRouter);
 app.use('/scoreboards', scoreboardRoute);
 app.use('/signin', signinRouter);
 
-
+const t = require('./handlers/handlerMatches');
+app.use('/', async (req,res)=> {
+    let r = await t.registerTournamentAdvance(18);
+    return res.status(200).json(r);
+})
 //serve the app 
 
 app.listen(3000, () => {
