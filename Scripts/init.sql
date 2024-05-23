@@ -1,9 +1,15 @@
 \c backend;
 
+-- Create the sequence manually, set MINVALUE to 0, and start from 0
+CREATE SEQUENCE equipos_id_seq MINVALUE 0 START 0;
+
 create table equipos (
-    id serial primary key,
+    id integer PRIMARY KEY DEFAULT nextval('equipos_id_seq'),
     nombre_seleccion varchar(80)
 );
+
+-- Alter the table to set the default value for the id column
+ALTER TABLE equipos ALTER COLUMN id SET DEFAULT nextval('equipos_id_seq');
 
 create table  usuario (
     ci integer primary key,
@@ -59,68 +65,76 @@ create table posiciones (
 
 --Agrego los Equipos
 INSERT INTO equipos (nombre_seleccion) VALUES 
-('Argentina'),--1 GA
-('Perú'),--2 GA
-('Chile'),--3 GA
-('Canadá'),--4 GA
-('México'),--5 GB
-('Ecuador'),--6 GB
-('Venezuela'),--7 GB
-('Jamaica'),--8 GB
-('Estados Unidos'),--9 GC
-('Uruguay'),--10 GC
-('Panamá'),--11 GC
-('Bolivia'),--12 GC
-('Brasil'),--13 GD
-('Colombia'),--14 GD
-('Paraguay'),--15 GD
-('Costa Rica');--16 GD
+('Argentina'),--0
+('Perú'),--1
+('Chile'),--2
+('Canadá'),--3
+('México'),--4
+('Ecuador'),--5
+('Venezuela'),--6
+('Jamaica'),--7
+('Estados Unidos'),--8
+('Uruguay'),--9
+('Panamá'),--10
+('Bolivia'),--11
+('Brasil'),--12
+('Colombia'),--13
+('Paraguay'),--14
+('Costa Rica');--15
 
 --insert the temams in the table of positions, to simplify the sql query
-q
+INSERT INTO posiciones (id_equipo, puntos, diferenciagoles) VALUES
+(0, 0 , 0),
+(1, 0 , 0),
+(2, 0 , 0),
+(3, 0 , 0),
+(4, 0 , 0),
+(5, 0 , 0),
+(6, 0 , 0),
+(7, 0 , 0),
+(8, 0 , 0),
+(9, 0 , 0),
+(10, 0 , 0),
+(11, 0 , 0),
+(12, 0 , 0),
+(13, 0 , 0),
+(14, 0 , 0),
+(15, 0 , 0);
 
 --Ingreso los partidos
 --https://copaamerica.com/calendario-de-partidos/
 
 --Ojo al guardarlo el pg lo convierte a utc (el middleware cambia al datenow a utc antes de chequear)
 INSERT INTO partidos (fecha, etapa, id_equipo1, id_equipo2) VALUES
-('2024-06-20 20:00:00-04', 'Grupo A', 1 ,4),--1
-('2024-06-21 19:00:00-05', 'Grupo A', 2 ,3),--2
-('2024-06-22 20:00:00-05', 'Grupo B', 5 ,8),--3
-('2024-06-22 15:00:00-07', 'Grupo B', 6 ,7),--4
-('2024-06-23 17:00:00-05', 'Grupo C', 9 , 12),--5
-('2024-06-23 21:00:00-04', 'Grupo C', 10 , 11),--6
-('2024-06-24 18:00:00-07', 'Grupo D', 13 , 16),--7
-('2024-06-24 17:00:00-05', 'Grupo D', 14 , 15),--8
-('2024-06-25 21:00:00-04', 'Grupo A', 3 , 1),--9
-('2024-06-25 17:00:00-05', 'Grupo A', 2 , 4),--10
-('2024-06-26 18:00:00-07', 'Grupo B', 7 , 5),--11
-('2024-06-26 15:00:00-07', 'Grupo B', 6 , 8),--12
-('2024-06-27 18:00:00-04', 'Grupo C', 11 , 9),--13
-('2024-06-27 21:00:00-04', 'Grupo C', 10 , 12),--14
-('2024-06-28 18:00:00-07', 'Grupo D', 15 , 13),--15
-('2024-06-28 15:00:00-07', 'Grupo D', 14 , 16),--16
-('2024-06-29 21:00:00-04', 'Grupo A', 1 , 2),--17
-('2024-06-29 20:00:00-04', 'Grupo A', 4 , 3),--18
-('2024-06-30 17:00:00-07', 'Grupo B', 5 , 6),--19
-('2024-06-30 19:00:00-05', 'Grupo B', 8 , 7),--20
-('2024-07-01 20:00:00-05', 'Grupo C', 9 , 10),--21
-('2024-07-01 21:00:00-04', 'Grupo C', 12 , 11),--22
-('2024-07-02 18:00:00-07', 'Grupo D', 13 , 14),--23
-('2024-07-02 20:00:00-05', 'Grupo D', 16 , 15),--24
-('2024-07-04 20:00:00-05', 'Cuartos de Final', null , null), --25  1A VS 2B
-('2024-07-05 20:00:00+00', 'Cuartos de Final', null , null), --26  1B VS 2A
-('2024-07-06 18:00:00+00', 'Cuartos de Final', null , null), --27  1C VS 2D
-('2024-07-06 15:00:00+00', 'Cuartos de Final', null , null), --28  1D VS 2C
-('2024-07-09 20:00:00+00', 'Semifinales', null , null), --29   G25 vs G26
-('2024-07-10 20:00:00+00', 'Semifinales', null , null), --30   G27 vs G28
-('2024-07-13 20:00:00+00', '3er Puesto', null , null), --31   P29 vs P30
-('2024-07-14 20:00:00+00', 'Final', null , null);--32  G29 vs G30
-
-
-
-
-
-
-
-
+('2024-06-20 20:00:00-04', 'Grupo A', 0 ,3),--0
+('2024-06-21 19:00:00-05', 'Grupo A', 1 ,2),--1
+('2024-06-22 20:00:00-05', 'Grupo B', 4 ,7),--2
+('2024-06-22 15:00:00-07', 'Grupo B', 5 ,6),--3
+('2024-06-23 17:00:00-05', 'Grupo C', 8 , 11),--4
+('2024-06-23 21:00:00-04', 'Grupo C', 9 , 10),--5
+('2024-06-24 18:00:00-07', 'Grupo D', 12 , 15),--6
+('2024-06-24 17:00:00-05', 'Grupo D', 13 , 14),--7
+('2024-06-25 21:00:00-04', 'Grupo A', 2 , 0),--8
+('2024-06-25 17:00:00-05', 'Grupo A', 1 , 3),--9
+('2024-06-26 18:00:00-07', 'Grupo B', 6 , 4),--10
+('2024-06-26 15:00:00-07', 'Grupo B', 5 , 7),--11
+('2024-06-27 18:00:00-04', 'Grupo C', 10 , 8),--12
+('2024-06-27 21:00:00-04', 'Grupo C', 9 , 11),--13
+('2024-06-28 18:00:00-07', 'Grupo D', 14 , 12),--14
+('2024-06-28 15:00:00-07', 'Grupo D', 13 , 15),--15
+('2024-06-29 21:00:00-04', 'Grupo A', 0 , 1),--16
+('2024-06-29 20:00:00-04', 'Grupo A', 3 , 2),--17
+('2024-06-30 17:00:00-07', 'Grupo B', 4 , 5),--18
+('2024-06-30 19:00:00-05', 'Grupo B', 7 , 6),--19
+('2024-07-01 20:00:00-05', 'Grupo C', 8 , 9),--20
+('2024-07-01 21:00:00-04', 'Grupo C', 11 , 10),--21
+('2024-07-02 18:00:00-07', 'Grupo D', 12 , 13),--22
+('2024-07-02 20:00:00-05', 'Grupo D', 15 , 14),--23
+('2024-07-04 20:00:00-05', 'Cuartos de Final', null , null), --24  1A VS 2B
+('2024-07-05 20:00:00+00', 'Cuartos de Final', null , null), --25  1B VS 2A
+('2024-07-06 18:00:00+00', 'Cuartos de Final', null , null), --26  1C VS 2D
+('2024-07-06 15:00:00+00', 'Cuartos de Final', null , null), --27  1D VS 2C
+('2024-07-09 20:00:00+00', 'Semifinales', null , null), --28   G25 vs G26
+('2024-07-10 20:00:00+00', 'Semifinales', null , null), --29   G27 vs G28
+('2024-07-13 20:00:00+00', '3er Puesto', null , null), --30   P29 vs P30
+('2024-07-14 20:00:00+00', 'Final', null , null);--31  G29 vs G30
