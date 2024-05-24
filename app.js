@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+const http = require('http');
+const WebSocket = require('ws');
+const webSocketEndpoint = require('./services/notificationservice')
 //configure express
 app.use(express.json())
 
@@ -31,7 +34,17 @@ app.use('/signin', signinRouter);
 
 
 //serve the app 
-
+/*
 app.listen(3000, () => {
   console.info("Server running at port 3000:  http://localhost:3000")
+})*/
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+webSocketEndpoint.setWS(wss);
+webSocketEndpoint.wsCreateCon();
+
+
+server.listen(3000, ()=>{
+  console.log("Express y WebSocket en el puerto 3000")
 })
+

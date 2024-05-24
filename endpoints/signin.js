@@ -4,6 +4,9 @@ const handlerJWT = require('../handlers/handlerjwt');
 const handlerUser= require('../handlers/handlerUsers');
 const errors = require('../services/errorsmessages')
 
+
+
+const notify = require('../services/notificationservice');
 router.post('/signin', async(req,res) => {
     try{
         let {ci, hashedpass} = req.body;
@@ -23,6 +26,11 @@ router.post('/signin', async(req,res) => {
             }
             let token = handlerJWT.sign(ci, es_admin);
             if(token.status == 200){
+                /**
+                 * DEBUG
+                 */
+                notify.Notify("EL usuario se unio al lio");
+
                 return res.status(200).json({token: token.token});
             }else{
                 return res.status(500).json(errors(500, "The user and password are corrects, but the server cant sign the token."))
