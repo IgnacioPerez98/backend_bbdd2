@@ -1,39 +1,30 @@
-const e = require("express");
 let ws;
 
-let clients = new Map();
+const handlerNotificaciones = require('../handlers/handlerNotificaciones')
+
+const clients = new Map();
 let WebSocket = {
-
-
-    getWS : function (){
+    getWS : () => {
         return ws;
     },
-    setWS : function (wss){
+    setWS : (wss) => {
         ws = wss;
     },
     /**
      * Nico tenes que enviar un json al conectarte: {"type": "identify", "ciUser", "el user id" }
      */
-    wsCreateCon : function (){
-        this.getWS().on('connection', (ws) => {
+    wsCreateCon :  () => {
+        WebSocket.getWS().on('connection', (ws) => {
 
-            ws.on('message', (message) => {
+            ws.on('message', async (message) => {
                 try {
                     const data = JSON.parse(message);
-                    if (data.type === 'identify') {
-                        // Store the WebSocket connection with the user ID
-                        clients.set(data.ciUser, ws);
-                        ws.userId = data.ciUser;
-                        console.log(`User ${data.ciUser} connected`);
-                    } else {
-                        console.log(`Received message from user ${ws.ciUser}: ${data.message}`);
-                        // Handle other message types
-                    }
+                    handlerNotificaciones.handle(ws,data);
             } catch (error) {
                 console.log('Error parsing message:', error);
             }
             });
-            ws.on('close', () => {
+            ws.on('close', async () => {
                 console.log(`User ${ws.ciUser} disconnected`);
                 clients.delete(ws.ciUser)
             });
@@ -42,12 +33,19 @@ let WebSocket = {
     /**
      * Notifica a los usuarios a travez del WebSocket
      * @param {*} texto  Valor texto del mensaje a enviar
-     * @param {*} id numero de cedla del usuario
+     * @param {*} id numero[] de cedulas del usuario
      */
     Notify: function (texto,id){
         try {
             ws.clients.forEach((client) => {
-                client.send(texto);
+                if(id === undefined || id === null){
+                    //no se define es un broadcast
+                    client.send(texto);
+                }else{
+                    if(id === client.userId){
+                        client.send(texto);
+                    }
+                }
             });
         } catch (error) {
             console.log(error);
@@ -57,4 +55,4 @@ let WebSocket = {
 }
 
 
-module.exports = WebSocket;
+module.exports = {WebSocket, clients};

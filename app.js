@@ -40,8 +40,8 @@ app.listen(3000, () => {
 })*/
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-webSocketEndpoint.setWS(wss);
-webSocketEndpoint.wsCreateCon();
+webSocketEndpoint.WebSocket.setWS(wss);
+webSocketEndpoint.WebSocket.wsCreateCon();
 
 
 server.listen(3000, ()=>{
