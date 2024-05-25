@@ -1,25 +1,38 @@
-let ws;
+let wsocket;
 
-const handlerNotificaciones = require('../handlers/handlerNotificaciones')
+const userHandler = require("../handlers/handlerUsers");
 
 const clients = new Map();
-let WebSocket = {
-    getWS : () => {
-        return ws;
+let notification = {
+    getWS : function()  {
+        return wsocket;
     },
-    setWS : (wss) => {
-        ws = wss;
+    setWS : function (wss) {
+        wsocket = wss;
     },
     /**
      * Nico tenes que enviar un json al conectarte: {"type": "identify", "ciUser", "el user id" }
      */
     wsCreateCon :  () => {
-        WebSocket.getWS().on('connection', (ws) => {
+        wsocket.on('connection', (ws) => {
 
             ws.on('message', async (message) => {
                 try {
                     const data = JSON.parse(message);
-                    handlerNotificaciones.handle(ws,data);
+                    switch (data.type){
+                        case 'identify':
+                            try{
+                                // Store the WebSocket connection with the user ID
+                                clients.set(data.ciUser, ws);
+                                wsocket.userId = data.ciUser;
+                                let user = await userHandler.signin(data.ciUser);
+                                ws.userdata = user.data;
+                                Notify(`Welcome ${user.data.username}`,null)
+                            }catch(error){
+                                console.error('Error en funcion notificacion: ',error);
+                            }
+
+                    }
             } catch (error) {
                 console.log('Error parsing message:', error);
             }
@@ -37,7 +50,7 @@ let WebSocket = {
      */
     Notify: function (texto,id){
         try {
-            ws.clients.forEach((client) => {
+            wsocket.clients.forEach((client) => {
                 if(id === undefined || id === null){
                     //no se define es un broadcast
                     client.send(texto);
@@ -55,4 +68,4 @@ let WebSocket = {
 }
 
 
-module.exports = {WebSocket, clients};
+module.exports = notification;

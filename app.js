@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const http = require('http');
 const WebSocket = require('ws');
-const webSocketEndpoint = require('./services/notificationservice')
+const notifyService = require('./services/notificationservice')
 //configure express
 app.use(express.json())
 
@@ -40,8 +40,8 @@ app.listen(3000, () => {
 })*/
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-webSocketEndpoint.WebSocket.setWS(wss);
-webSocketEndpoint.WebSocket.wsCreateCon();
+notifyService.setWS(wss);
+notifyService.wsCreateCon();
 
 
 server.listen(3000, ()=>{
