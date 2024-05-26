@@ -6,7 +6,7 @@ const hanlderMatches = require('../handlers/handlerMatches');
 const matchhourmiddleware = async(req, res, next) => {
 
     let {id_partido} =req.body;
-    if(id_partido == undefined ){
+    if(id_partido === undefined ){
         console.error("Middleware error 400", "You must provide a field id_partido in the body");
         return res.status(400).json(errors(400, "You must provide a field id_partido in the body"))
     }
@@ -16,7 +16,7 @@ const matchhourmiddleware = async(req, res, next) => {
         return res.status(400).json(errors(400, `We cant find match with id ${id_partido}`))
     }
     let {match} = partido
-    if(match == undefined){
+    if(match === undefined){
         return res.status(400).json(errors(400, `We cant find match with id ${id_partido}`))
     }
     let horaActual = new Date(Date.now()).getTime();

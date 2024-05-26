@@ -148,6 +148,34 @@ let hanlderMatches = {
       return { status: 500, error: e.toString() };
     }
   },
+  getMatchandDate : async () =>{
+    try {
+      let sql = `SELECT
+                   p.id,
+                   p.fecha,
+                   p.etapa,
+                   e1.nombre_seleccion AS equipo1,
+                   e2.nombre_seleccion AS equipo2
+                 FROM
+                   partidos p
+                     LEFT JOIN
+                   equipos e1 ON p.id_equipo1 = e1.id
+                     LEFT JOIN
+                   equipos e2 ON p.id_equipo2 = e2.id;`;
+      let result = await PostgresService.query(sql);
+      if (result.rowCount > 0) {
+        return { status: 200, matches: result.rows };
+      } else {
+        return {
+          status: 500,
+          error: "The system can not load get the matches.",
+        };
+      }
+    } catch (e) {
+      console.error("Error getting all matches:", e);
+      return { status: 500, error: e.toString() };
+    }
+  },
   getMatchByRange: async (initRange, endRange) => {
     try {
       let sql = `SELECT
