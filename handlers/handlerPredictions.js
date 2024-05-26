@@ -112,6 +112,29 @@ let handlerPredictions = {
             return {status: 500, error: e.toString()}
         }
         
+    },
+    getIdsWithoutResult : async (id_partido) => {
+        let sql = `SELECT distinct P.id FROM predicciones P JOIN usuario U
+        ON P.id = U.ci
+        where id_ganador is null AND id_partido = $1
+        ORDER BY id ASC 
+        `;
+        try{
+            let resultado = await PostgresService.query(sql, [id_partido]);
+            if(resultado.rowCount > 0){
+                return {status:200, data: resultado.rows};
+            }else{
+                return {status: 500, error: "No rows where affected."}
+            }
+
+
+        }catch(error){
+            console.error("Error getting ids of persons that dont entered a result: ",error)
+            return {
+                status:500,
+                error: error
+            }
+        }
     }
 
 }
