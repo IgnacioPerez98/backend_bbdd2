@@ -59,7 +59,7 @@ let handlerPredictions = {
             if (resultado.rowCount > 0) {
                 return { status: 200, message: "Prediction updated successfully." };
             } else {
-                return { status: 500, error: "No rows were affected." };
+                return {status: 200, predicts: []}
             }
     
         } catch (e) {
@@ -85,7 +85,7 @@ let handlerPredictions = {
                 )
                 return {status:200, predicts: pred};
             }else{
-                return {status: 500, error: "No rows where affected."}
+                return {status: 200, predicts: []}
             }
         }catch(e){
             console.error("Error getting a predition:",e)
@@ -105,7 +105,7 @@ let handlerPredictions = {
             if(resultado.rowCount > 0){
                 return {status:200, message: "The prediction was successfully deleted."};
             }else{
-                return {status: 500, error: "No rows where affected."}
+                return {status: 200, predicts: []}
             }
         }catch(e){
             console.error("Error deleting a predition:",e)
@@ -124,7 +124,7 @@ let handlerPredictions = {
             if(resultado.rowCount > 0){
                 return {status:200, data: resultado.rows};
             }else{
-                return {status: 500, error: "No rows where affected."}
+                return {status: 200, predicts: []}
             }
 
 

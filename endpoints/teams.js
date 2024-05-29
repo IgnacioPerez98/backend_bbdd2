@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router()
 const errors = require('../services/errorsmessages')
 const handlerTeams = require('../handlers/handlerTeams')
+const authmw = require('../middlewares/authmiddleware')
 
 /**
  * Obtains all the selections that integrate the tournament.
  */
-router.get('/teams', async (req,res)=>{
+router.get('/teams',authmw, async (req,res)=>{
     try{
         let result  = await handlerTeams.getAll();
         if(result.status == 200){
@@ -21,7 +22,7 @@ router.get('/teams', async (req,res)=>{
 /**
  * Obtain one selection providing the valid id.
  */
-router.get('/teams/:id', async (req,res) => {
+router.get('/teams/:id',authmw, async (req,res) => {
     try{
         let { id } = req.params;
         if(id === undefined){
