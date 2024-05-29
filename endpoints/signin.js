@@ -3,7 +3,10 @@ const router = express.Router();
 const handlerJWT = require('../handlers/handlerjwt');
 const handlerUser= require('../handlers/handlerUsers');
 const errors = require('../services/errorsmessages')
+const authmw = require('../middlewares/authmiddleware')
 
+
+const notify = require('../services/notificationservice');
 router.post('/signin', async(req,res) => {
     try{
         let {ci, hashedpass} = req.body;
@@ -23,6 +26,7 @@ router.post('/signin', async(req,res) => {
             }
             let token = handlerJWT.sign(ci, es_admin);
             if(token.status == 200){
+
                 return res.status(200).json({token: token.token});
             }else{
                 return res.status(500).json(errors(500, "The user and password are corrects, but the server cant sign the token."))
@@ -40,9 +44,10 @@ router.post('/signin', async(req,res) => {
 /**
  * Util to change the password only due the ci, username, champion ,subchambion and admin role are not allowed to be changed.
  */
-router.patch('/changepass', async (req, res) => {
+router.patch('/changepass',authmw, async (req, res) => {
     try{
-        let {ci, pass,} = req.body;
+        let {ci} = req.claims;
+        let { pass,} = req.body;
         if(ci === undefined || pass === undefined ){
             return res.status(404).json(errors(400, "The body is not in  correct format") );
         }

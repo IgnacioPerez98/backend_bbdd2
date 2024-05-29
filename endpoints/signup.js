@@ -22,7 +22,7 @@ router.post('/user', async (req, res) => {
             //edit to add the token of the user
             return res.status(200).json(errors(200));
         }else{
-            return res.status(500).json(errors(result.status, result.message));
+            return res.status(result.status).json(errors(result.status, result.message));
         }
     }catch(e){
         console.error("Sign up Error: ",e)

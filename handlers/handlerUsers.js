@@ -13,6 +13,9 @@ let hanlderUsers = {
             }
             return {status:400, message: "No rows where affected"};
         }catch(error){
+            if(error.code = '23505'){
+                return { status: 400, message: "The user is already registered."}
+            }
             console.error("Error creating user: ",error)
             return {status:500, message: error.message};
 
