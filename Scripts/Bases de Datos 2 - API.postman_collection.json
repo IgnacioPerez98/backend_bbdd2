@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e42b38b6-5eaf-4267-966c-906a612db8bd",
+		"_postman_id": "70195ac2-9b00-489d-83bd-ed489f5b8956",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "18324610"
 	},
 	"item": [
 		{
@@ -11,12 +11,24 @@
 			"item": [
 				{
 					"name": "SignUp-User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 1,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
+							"raw": "{\n    \"ci\": 2,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,13 +56,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    let {token} =  pm.response.body",
-									"    console.log(\"Token seted as: \",token)",
-									"    pm.globals.set(\"gtoken\", token);",
-									"    pm.environment.set(\"gtoken\", token);",
-									"});"
+									"pm.environment.set(\"TOKEN\", `Bearer ${pm.response.json().token}`);"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -62,7 +68,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ci\": 1,\r\n    \"hashedpass\": \"Crack\"\r\n\r\n}",
+							"raw": "{\r\n    \"ci\": 2,\r\n    \"hashedpass\": \"Crack\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -90,7 +96,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJjaSI6MSwiZXNhZG1pbiI6MCwicmVzaWduY291bnQiOjAsImlhdCI6MTcxNzAyNTQxMCwiZXhwIjoxNzgwMTQwNjEwfQ.kvY5_mzKKRxL2Ds6GOEVoCoxvpCuzPn5mBZwuGin1PLF9ST4oD8dA91lGRmow1SmDQRL00qV1Twdc45vJBongA"
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -140,7 +146,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/selections/teams",
+							"raw": "http://{{endpoint}}/selections/teams?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -148,6 +154,12 @@
 							"path": [
 								"selections",
 								"teams"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -159,7 +171,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{endpoint}}/selections/teams/9",
+							"raw": "http://{{endpoint}}/selections/teams/9?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -168,6 +180,12 @@
 								"selections",
 								"teams",
 								"9"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -182,7 +200,13 @@
 					"name": "CreateAPrediction",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"ci\" : 49765166,\n    \"id_partido\": 6, \n    \"id_ganador\": 9, \n    \"id_perdedor\": 11, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
@@ -226,7 +250,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/prediction/predict",
+							"raw": "http://{{endpoint}}/prediction/predict?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -234,6 +258,12 @@
 							"path": [
 								"prediction",
 								"predict"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -257,7 +287,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/prediction/predict",
+							"raw": "http://{{endpoint}}/prediction/predict?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -265,6 +295,12 @@
 							"path": [
 								"prediction",
 								"predict"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -285,7 +321,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/prediction/predict",
+							"raw": "http://{{endpoint}}/prediction/predict?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -293,6 +329,12 @@
 							"path": [
 								"prediction",
 								"predict"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -307,7 +349,13 @@
 					"name": "InsertMatchResult",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \n}",
@@ -349,7 +397,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
+							"raw": "http://{{endpoint}}/matches/results?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -357,6 +405,12 @@
 							"path": [
 								"matches",
 								"results"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -368,7 +422,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{endpoint}}/matches/results/1",
+							"raw": "http://{{endpoint}}/matches/results/1?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -377,6 +431,12 @@
 								"matches",
 								"results",
 								"1"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -400,7 +460,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
+							"raw": "http://{{endpoint}}/matches/results?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -408,6 +468,12 @@
 							"path": [
 								"matches",
 								"results"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -424,7 +490,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{endpoint}}/scoreboards/allpoints",
+							"raw": "http://{{endpoint}}/scoreboards/allpoints?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -432,6 +498,12 @@
 							"path": [
 								"scoreboards",
 								"allpoints"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
@@ -443,7 +515,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://{{endpoint}}/scoreboards/accountpoints",
+							"raw": "http://{{endpoint}}/scoreboards/accountpoints?Authorization={{token}}",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -451,6 +523,12 @@
 							"path": [
 								"scoreboards",
 								"accountpoints"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "{{token}}"
+								}
 							]
 						}
 					},
