@@ -5,11 +5,11 @@ environ.config()
 let handlerJWT = {
     sign : (ci,esadmin) => {
         try{
-           let token = jwt.sign({ci:ci, esadmin :esadmin, resigncount: 0},process.env.jwtsecret,{expiresIn: '1h' , algorithm: 'HS512'})
+           let token = jwt.sign({ci:ci, esadmin :esadmin, resigncount: 0},process.env.jwtsecret,{expiresIn: '2y' , algorithm: 'HS512'})
            if(token !== undefined){
                 return {status :200, token: token};
            }else{
-            return {status : 500, message: "Server cuol not sign the token" }
+            return {status : 500, message: "Server could not sign the token" }
            }
 
         }catch(e){

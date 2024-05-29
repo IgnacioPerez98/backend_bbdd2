@@ -3,11 +3,13 @@ const router = express.Router();
 const handlerPredictions = require('../handlers/handlerPredictions');
 const errors = require('../services/errorsmessages');
 const hmiddleware = require('../middlewares/matchtimemidlleware')
+const authmw = require('../middlewares/authmiddleware')
 
 //crud preditions
-router.post('/predict',hmiddleware, async (req, res, next) => {
+router.post('/predict',authmw,hmiddleware, async (req, res, next) => {
   try{
-    let { ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    let {ci} = req.claims;
+    let { id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     if (
       ci ==undefined ||
       id_partido ==undefined ||
@@ -32,9 +34,10 @@ router.post('/predict',hmiddleware, async (req, res, next) => {
 /**
  * Patch an already created prediction.
  */
-router.patch('/predict',hmiddleware, async (req, res) => {
+router.patch('/predict',authmw,hmiddleware, async (req, res) => {
   try{
-    let {ci, id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    let {ci} = req.claims;
+    let {id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
     //The other values are checked when the handler join the sql statement.
     if (
       id_partido == undefined ||
@@ -53,9 +56,11 @@ router.patch('/predict',hmiddleware, async (req, res) => {
     return res.status(500).json(errors(500, e.toString()))
   }
 });
-router.get('/predict', async (req, res,next) => {
+router.get('/predict', authmw,async (req, res,next) => {
   try{
-    let {ci, id_partido} = req.body;
+
+    let {ci} = req.claims;
+    let { id_partido} = req.body;
     if(
       ci == undefined 
     ){
@@ -74,9 +79,10 @@ router.get('/predict', async (req, res,next) => {
 
 });
 
-router.delete('/predict',hmiddleware, async (req, res) => {
+router.delete('/predict', authmw,hmiddleware, async (req, res) => {
   try{
-    let {ci, id_partido} = req.body;
+    let {ci} = req.claims;
+    let {id_partido} = req.body;
     if(
       ci == undefined ||
       id_partido == undefined
@@ -85,7 +91,7 @@ router.delete('/predict',hmiddleware, async (req, res) => {
     }
     let resultado = await handlerPredictions.deletePredictionByMatchNumber(ci, id_partido);
     if(resultado.status ==200){
-      return  res.status(resultado.status).json(resultado.predicts);
+      return  res.status(resultado.status).json({message:resultado.message});
     }else{
       return res.status(resultado.status).json(errors(resultado.status,resultado.error));
     }

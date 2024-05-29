@@ -72,7 +72,7 @@ const scheduleMatchNotification = async () =>{
         if(partidos.status === 200){
             let {matches} = partidos;
             matches.forEach( (partido) => {
-                let horaPartido = new Date(Date.parse(match.fecha))
+                let horaPartido = new Date(Date.parse(partido.fecha))//aca hay cagada
                 horaPartido = horaPartido.setHours(horaPartido.getHours() - 1);
                 let mensaje = "";
                 if(partido.id <25){
@@ -97,8 +97,9 @@ const scheduleMatchNotification = async () =>{
                     await notifyNotPrediction(partido.id);
                 })
             })
+        }else{
+            console.error("Error getting the matches: ",partidos.error)
         }
-        console.error("Error getting the matches")
 
     }catch (error){
         console.error("Error on match schedule: ",error)
