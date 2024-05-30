@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e42b38b6-5eaf-4267-966c-906a612db8bd",
+		"_postman_id": "c1a69608-8b60-4b71-a889-f9fccb599679",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26000907"
@@ -44,13 +44,18 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    let {token} =  pm.response.body",
-									"    console.log(\"Token seted as: \",token)",
-									"    pm.globals.set(\"gtoken\", token);",
-									"    pm.environment.set(\"gtoken\", token);",
-									"});"
+									"let {token} = pm.response.json();",
+									"pm.globals.set('TOKEN',`Bearer ${token}`)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -90,7 +95,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJjaSI6MSwiZXNhZG1pbiI6MCwicmVzaWduY291bnQiOjAsImlhdCI6MTcxNzAyNTQxMCwiZXhwIjoxNzgwMTQwNjEwfQ.kvY5_mzKKRxL2Ds6GOEVoCoxvpCuzPn5mBZwuGin1PLF9ST4oD8dA91lGRmow1SmDQRL00qV1Twdc45vJBongA"
+								"value": "{{TOKEN}}"
 							}
 						],
 						"body": {
@@ -129,7 +134,12 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -157,7 +167,12 @@
 					"name": "GetTeamByID",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"url": {
 							"raw": "http://{{endpoint}}/selections/teams/9",
 							"protocol": "http",
@@ -182,10 +197,15 @@
 					"name": "CreateAPrediction",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\" : 49765166,\n    \"id_partido\": 6, \n    \"id_ganador\": 9, \n    \"id_perdedor\": 11, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
+							"raw": "{\n    \"id_partido\": 6, \n    \"id_ganador\": 9, \n    \"id_perdedor\": 11, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,7 +233,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJjaSI6MSwiZXNhZG1pbiI6MCwicmVzaWduY291bnQiOjAsImlhdCI6MTcxNzAyNTQxMCwiZXhwIjoxNzgwMTQwNjEwfQ.kvY5_mzKKRxL2Ds6GOEVoCoxvpCuzPn5mBZwuGin1PLF9ST4oD8dA91lGRmow1SmDQRL00qV1Twdc45vJBongA"
+								"value": "{{TOKEN}}"
 							}
 						],
 						"body": {
@@ -241,21 +261,14 @@
 				},
 				{
 					"name": "GetAPrediction",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"ci\": 49765166\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
 							}
-						},
+						],
 						"url": {
 							"raw": "http://{{endpoint}}/prediction/predict",
 							"protocol": "http",
@@ -274,10 +287,15 @@
 					"name": "DeletePrediction",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_partido\": 6\n\n}",
+							"raw": "{\n    \"id_partido\": 6\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,41 +325,15 @@
 					"name": "InsertMatchResult",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
 							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetAllMatches",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"id_partido\": 1, \n    \"id_ganador\": 9, \n    \"id_perdedor\": 11, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -366,9 +358,14 @@
 					"name": "GetMatchByID",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"url": {
-							"raw": "http://{{endpoint}}/matches/results/1",
+							"raw": "http://{{endpoint}}/matches/results/24",
 							"protocol": "http",
 							"host": [
 								"{{endpoint}}"
@@ -376,7 +373,31 @@
 							"path": [
 								"matches",
 								"results",
-								"1"
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllMatches",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results"
 							]
 						}
 					},
@@ -389,7 +410,12 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"from\": 1,\n    \"to\": 24\n}",
@@ -422,7 +448,12 @@
 					"name": "getAllUsersPoints",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"url": {
 							"raw": "http://{{endpoint}}/scoreboards/allpoints",
 							"protocol": "http",
@@ -441,7 +472,12 @@
 					"name": "getPointsByUsername",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"url": {
 							"raw": "http://{{endpoint}}/scoreboards/accountpoints",
 							"protocol": "http",
