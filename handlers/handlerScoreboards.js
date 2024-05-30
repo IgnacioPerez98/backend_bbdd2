@@ -7,8 +7,9 @@ let handlerScoreBoards = {
             let resultado = await PostgresService.query(sql, [ci_usuario]);
             if(resultado.rowCount > 0){
                 return {status: 200, scoreboards: resultado.rows[0]};
+            }else{
+                return {status: 200, scoreboards: []}
             }
-            return {status:400, message: "No rows where affected"};
         }catch(e){
             console.error("Error getting the scoreboard by user.",e);
             return {status: 500, error: e.toString()}
@@ -20,8 +21,9 @@ let handlerScoreBoards = {
             let resultado = await PostgresService.query(sql);
             if(resultado.rowCount > 0){
                 return {status: 200, scoreboards: resultado.rows};
+            }else{
+                return {status: 200, scoreboards: []}
             }
-            return {status:400, message: "The query dont have data asosiated"};
         }catch(e){
             console.error("Error getting the scoreboard by user.",e);
             return {status: 500, error: e.toString()}
