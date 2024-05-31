@@ -225,6 +225,8 @@ const registerTournamentAdvance = async ( c,id_partido) => {
         //fase de grupos
         if(id_partido < 25){
           let winner = await getWinnerByStage(c,id_partido);
+          if(winner.status ===200) {
+
           //controlar error
           let {result} = winner;
           let team1 = result[0].id_equipo;
@@ -264,56 +266,59 @@ const registerTournamentAdvance = async ( c,id_partido) => {
               }
               break;
           }
+          }
         }else{
           let winner = await getWinnerByStage(c,id_partido);
-          let id = winner.id_ganador;
-          let perd = winner.id_perdedor;
-          switch(id_partido){
-            case 25:
-              let pt1 = await setTeamsFinalStage(c, id,null,29)
-              if(pt1.status !== 200){
-                throw new Error("Fallo la actualizacion de partidos");
-              }
-              break;
-            case 26:
-              let pt2 = await setTeamsFinalStage(c, null,id,29)
-              if(pt2.status !== 200){
-                throw new Error("Fallo la actualizacion de partidos");
-              }
-              break;
-            case 27:
-              let pt3 = await setTeamsFinalStage(c, id,null,30)
-              if(pt3.status !== 200){
-                throw new Error("Fallo la actualizacion de partidos");
-              }
-              break;
-            case 28:
-              let pt4 = await setTeamsFinalStage(c, null,id,30)
-              if(pt4.status !== 200){
-                throw new Error("Fallo la actualizacion de partidos");
-              }
-              break;
-            case 29:
-              let gp1 = await setTeamsFinalStage(c,id,null,32);
-              if(gp1.status !== 200){
-                throw new Error("Fallo la actualización de partidos")
-              }
-              let pp1 = await setTeamsFinalStage(c,perd,null,31);
-              if(pp1.status !== 200){
-                throw new Error("Fallo la actualización de partidos")
-              }
-              break;
-            case 30:
-              let gp2 = await setTeamsFinalStage(c,null,id,32);
-              if(gp2.status !== 200){
-                throw new Error("Fallo la actualización de partidos")
-              }
-              let pp2 = await setTeamsFinalStage(c,null,perd,31);
-              if(pp2.status !== 200){
-                throw new Error("Fallo la actualización de partidos")
-              }
-              break;
-                                                      
+          if (winner.status === 200)  {
+            let id = winner.id_ganador;
+            let perd = winner.id_perdedor;
+            switch(id_partido){
+              case 25:
+                let pt1 = await setTeamsFinalStage(c, id,null,29)
+                if(pt1.status !== 200){
+                  throw new Error("Fallo la actualizacion de partidos");
+                }
+                break;
+              case 26:
+                let pt2 = await setTeamsFinalStage(c, null,id,29)
+                if(pt2.status !== 200){
+                  throw new Error("Fallo la actualizacion de partidos");
+                }
+                break;
+              case 27:
+                let pt3 = await setTeamsFinalStage(c, id,null,30)
+                if(pt3.status !== 200){
+                  throw new Error("Fallo la actualizacion de partidos");
+                }
+                break;
+              case 28:
+                let pt4 = await setTeamsFinalStage(c, null,id,30)
+                if(pt4.status !== 200){
+                  throw new Error("Fallo la actualizacion de partidos");
+                }
+                break;
+              case 29:
+                let gp1 = await setTeamsFinalStage(c,id,null,32);
+                if(gp1.status !== 200){
+                  throw new Error("Fallo la actualización de partidos")
+                }
+                let pp1 = await setTeamsFinalStage(c,perd,null,31);
+                if(pp1.status !== 200){
+                  throw new Error("Fallo la actualización de partidos")
+                }
+                break;
+              case 30:
+                let gp2 = await setTeamsFinalStage(c,null,id,32);
+                if(gp2.status !== 200){
+                  throw new Error("Fallo la actualización de partidos")
+                }
+                let pp2 = await setTeamsFinalStage(c,null,perd,31);
+                if(pp2.status !== 200){
+                  throw new Error("Fallo la actualización de partidos")
+                }
+                break;
+                                                        
+            }
           }
 
         }
