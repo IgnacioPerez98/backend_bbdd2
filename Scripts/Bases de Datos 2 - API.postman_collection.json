@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7ee63c15-1520-4489-ac7f-8d0c98c9b0ab",
+		"_postman_id": "e96d6546-0d19-433d-a9d0-28845cd57073",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "33613607"
 	},
 	"item": [
 		{
@@ -497,6 +497,10 @@
 		{
 			"name": "Full Match Result",
 			"item": [
+				{
+					"name": "FaseGrupos",
+					"item": []
+				},
 				{
 					"name": "Match01",
 					"request": {
@@ -1553,7 +1557,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Generates a result for each match of the tournament, in order to calculate which is the team winner and test the final steps of the championship"
 		}
 	]
 }
