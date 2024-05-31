@@ -10,8 +10,9 @@ let hanlderMatches = {
     penales_ganador = null,
     penales_perdedor = null
   ) => {
+    let con = null;
     try {
-      let con = await PostgresService.getPool().connect();
+      con = await PostgresService.getClient().connect();
       try {
         await con.query("BEGIN");
         //Insert the result of the match
@@ -76,10 +77,12 @@ let hanlderMatches = {
       } catch (transactError) {
         console.error("Error loading match results: ", transactError);
         await con.query("ROLLBACK");
+        con.release();
         return { status: 500, error: transactError.message };
       }
     } catch (e) {
       console.error("Error loading match data: ", e);
+      con.release();
       return { status: 500, error: e.message };
     }
   },

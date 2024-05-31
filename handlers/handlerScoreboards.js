@@ -30,8 +30,9 @@ let handlerScoreBoards = {
         }
     },
     assignPointsAfterMatch : async (id_partido) => {
+        let c = null;
         try{
-            let c = await PostgresService.getPool().connect()
+            c = await PostgresService.getClient().connect()
             try{
                 await c.query('BEGIN');
                 let point2 = `WITH predicciones_ganadoras AS (
@@ -71,6 +72,7 @@ let handlerScoreBoards = {
                 //execute the statement that set 2 extras point to users that have aserted the result
                 await c.query(points4,[id_partido]);
                 await c.query('COMMIT');
+                c.release();
                 if(id_partido == 32){//final match
                     asignPointChampionAndSubChampion();
                 }
@@ -82,6 +84,7 @@ let handlerScoreBoards = {
                 c.release();
             }
         }catch(e){
+            c.release();
             console.error("Error al asignar puntos.",e)
             return {status: 500, error: e.toString()}
         }
@@ -90,8 +93,9 @@ let handlerScoreBoards = {
 }
 
 const asignPointChampionAndSubChampion = async () => {
+    let c = null;
     try{
-        let c = await PostgresService.getPool().connect()
+        c = await PostgresService.getClient().connect()
         try{       
             await c.query('BEGIN')
              //Assign points tu userts that assert the champion 
