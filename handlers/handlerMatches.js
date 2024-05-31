@@ -51,7 +51,7 @@ let hanlderMatches = {
           sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo= $2);`;
           params.push(id_ganador);
           params.push(id_perdedor);
-          let result = await con.query(sql, [id_ganador, id_perdedor]);
+          let result = await con.query(sql, params);
           if (result.rowCount <= 0) {
             throw new Error(
               "The system cant change the points. No rows where affected."
@@ -67,6 +67,10 @@ let hanlderMatches = {
             );
           }
         }
+
+        //Calculates the advance of the turnament
+        await this.registerTournamentAdvance(num_partido)
+        
         await con.query("COMMIT");
         return { status: 200, message: "Success"}
       } catch (transactError) {
