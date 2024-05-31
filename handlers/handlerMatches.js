@@ -68,9 +68,11 @@ let hanlderMatches = {
           }
         }
         await con.query("COMMIT");
+        return { status: 200, message: "Success"}
       } catch (transactError) {
         console.error("Error loading match results: ", transactError);
         await con.query("ROLLBACK");
+        throw new Error(transactError.toString())
       }
     } catch (e) {
       console.error("Error loading match data: ", e);

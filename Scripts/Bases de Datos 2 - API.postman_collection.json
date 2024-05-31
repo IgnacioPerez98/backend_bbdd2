@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "84c39b14-61be-4aef-a7f4-42b9d985d3f6",
+		"_postman_id": "7ee63c15-1520-4489-ac7f-8d0c98c9b0ab",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26276677"
+		"_exporter_id": "26000907"
 	},
 	"item": [
 		{
@@ -501,7 +501,12 @@
 					"name": "Match01",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
@@ -529,7 +534,12 @@
 					"name": "Match02",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 2, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
@@ -557,10 +567,15 @@
 					"name": "Match03",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 3, \r\n    \"id_ganador\": 2, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 1\r\n}",
+							"raw": "{\r\n    \"id_partido\": 3, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -585,10 +600,15 @@
 					"name": "Match04",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 4, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 1\r\n}",
+							"raw": "{\r\n    \"id_partido\": 4, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -613,10 +633,15 @@
 					"name": "Match05",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 5, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 4, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -641,10 +666,15 @@
 					"name": "Match06",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 6, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -669,10 +699,15 @@
 					"name": "Match07",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 7, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 5, \r\n    \"goles_perdedor\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -697,10 +732,15 @@
 					"name": "Match08",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 8, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -725,10 +765,15 @@
 					"name": "Match09",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 9, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -753,10 +798,15 @@
 					"name": "Match10",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 10, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -781,10 +831,15 @@
 					"name": "Match11",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 11, \r\n    \"id_ganador\": 6, \r\n    \"id_perdedor\": 4, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -809,10 +864,15 @@
 					"name": "Match12",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 12, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -837,10 +897,15 @@
 					"name": "Match13",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 13, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -865,10 +930,15 @@
 					"name": "Match14",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 14, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -893,10 +963,15 @@
 					"name": "Match15",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 15, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -921,10 +996,15 @@
 					"name": "Match16",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 16, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -949,10 +1029,15 @@
 					"name": "Match17",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 17, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 1, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -977,10 +1062,15 @@
 					"name": "Match18",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 18, \r\n    \"id_ganador\": 2, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1005,10 +1095,15 @@
 					"name": "Match19",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 19, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 5, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1033,10 +1128,15 @@
 					"name": "Match20",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 20, \r\n    \"id_ganador\": 7, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1061,10 +1161,15 @@
 					"name": "Match21",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 21, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 8, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1089,10 +1194,15 @@
 					"name": "Match22",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 22, \r\n    \"id_ganador\": 10, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1117,10 +1227,15 @@
 					"name": "Match23",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"raw": "{\r\n    \"id_partido\": 23, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 12, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1145,7 +1260,12 @@
 					"name": "Match24",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1173,7 +1293,12 @@
 					"name": "Match25",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1201,7 +1326,12 @@
 					"name": "Match26",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1229,7 +1359,12 @@
 					"name": "Match27",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1257,7 +1392,12 @@
 					"name": "Match28",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1285,7 +1425,12 @@
 					"name": "Match29",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1313,35 +1458,12 @@
 					"name": "Match30",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
 							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match32",
-					"request": {
-						"method": "POST",
-						"header": [],
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
@@ -1369,7 +1491,45 @@
 					"name": "Match31",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/matches/results",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"matches",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Match32",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
