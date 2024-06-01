@@ -12,7 +12,7 @@ let hanlderMatches = {
   ) => {
     let con = null;
     try {
-      con = await PostgresService.getClient().connect();
+      con = await PostgresService.getPool().connect();
       try {
         await con.query("BEGIN");
         //Insert the result of the match
@@ -73,6 +73,7 @@ let hanlderMatches = {
         await registerTournamentAdvance(con,num_partido)
         
         await con.query("COMMIT");
+        con.release();
         return { status: 200, message: "Success"}
       } catch (transactError) {
         console.error("Error loading match results: ", transactError);
