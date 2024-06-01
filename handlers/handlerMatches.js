@@ -357,7 +357,7 @@ const setTeamsFinalStage = async (con, id_equipo1, id_equipo2, id_partido) => {
       params.push(id_equipo2);
       counter++;
     }
-    sql += ` WHERE id_partido = $${counter};`; 
+    sql += ` WHERE id = $${counter};`; 
     params.push(id_partido);
     let resultado = await con.query(sql, params);
     if (resultado.rowCount > 0) {
