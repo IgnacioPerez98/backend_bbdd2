@@ -29,12 +29,10 @@ let handlerScoreBoards = {
             return {status: 500, error: e.toString()}
         }
     },
-    assignPointsAfterMatch : async (id_partido) => {
-        let c = null;
+    assignPointsAfterMatch : async (con, id_partido) => {
         try{
-            c = await PostgresService.getClient().connect()
             try{
-                await c.query('BEGIN');
+                await con.query('BEGIN');
                 let point2 = `WITH predicciones_ganadoras AS (
                     SELECT predicciones.ci_usuario
                     FROM partidos
@@ -51,7 +49,7 @@ let handlerScoreBoards = {
                 SET puntos = puntos + 2
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
-                await c.query(point2,[id_partido])
+                await con.query(point2,[id_partido])
 
                 //put a value where whe have exact match, it apply 2 point more to asign 4 points in total
                 let points4 = `WITH predicciones_ganadoras AS (
@@ -70,21 +68,21 @@ let handlerScoreBoards = {
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 //execute the statement that set 2 extras point to users that have aserted the result
-                await c.query(points4,[id_partido]);
-                await c.query('COMMIT');
-                c.release();
+                await con.query(points4,[id_partido]);
+                await con.query('COMMIT');
+                con.release();
                 if(id_partido == 32){//final match
                     asignPointChampionAndSubChampion();
                 }
 
             }catch(transactionError){
-                await c.query('ROLLBACK')
+                await con.query('ROLLBACK')
                 throw transactionError;
             }finally{
-                c.release();
+                con.release();
             }
         }catch(e){
-            c.release();
+            con.release();
             console.error("Error al asignar puntos.",e)
             return {status: 500, error: e.toString()}
         }
