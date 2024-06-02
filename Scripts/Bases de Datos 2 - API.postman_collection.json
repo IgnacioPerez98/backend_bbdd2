@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e96d6546-0d19-433d-a9d0-28845cd57073",
+		"_postman_id": "da90cd2d-c41a-49ab-9759-4a9c4b91acc9",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33613607"
+		"_exporter_id": "26000907"
 	},
 	"item": [
 		{
@@ -499,802 +499,1153 @@
 			"item": [
 				{
 					"name": "FaseGrupos",
-					"item": []
-				},
-				{
-					"name": "Match01",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"item": [
+						{
+							"name": "Match01",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match02",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 2, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match03",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 3, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match02",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match04",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 4, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 2, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match05",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 5, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 4, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match03",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match06",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 6, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 3, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match07",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 7, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 5, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match04",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match08",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 8, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 4, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match09",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 9, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match05",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match10",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 10, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 5, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 4, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match11",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 11, \r\n    \"id_ganador\": 6, \r\n    \"id_perdedor\": 4, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match06",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match12",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 12, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 6, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match13",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 13, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match07",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match14",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 14, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 7, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 5, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match15",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 15, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match08",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match16",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 16, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 8, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match17",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 17, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 1, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match09",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match18",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 18, \r\n    \"id_ganador\": 2, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 9, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 2, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match19",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 19, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 5, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match10",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match20",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 20, \r\n    \"id_ganador\": 7, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 10, \r\n    \"id_ganador\": 1, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match21",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 21, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 8, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match11",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match22",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 22, \r\n    \"id_ganador\": 10, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 11, \r\n    \"id_ganador\": 6, \r\n    \"id_perdedor\": 4, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
-							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match23",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 23, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 12, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Match12",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
 							],
-							"path": [
-								"matches",
-								"results"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Match24",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{TOKEN}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 12, \r\n    \"id_ganador\": 5, \r\n    \"id_perdedor\": 7, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://{{endpoint}}/matches/results",
-							"protocol": "http",
-							"host": [
-								"{{endpoint}}"
+						{
+							"name": "Match13",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
 							],
-							"path": [
-								"matches",
-								"results"
-							]
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 13, \r\n    \"id_ganador\": 8, \r\n    \"id_perdedor\": 10, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match14",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 14, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match15",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 15, \r\n    \"id_ganador\": 12, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match16",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 16, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 15, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 17, \r\n    \"id_ganador\": 0, \r\n    \"id_perdedor\": 1, \r\n    \"goles_ganador\": 2, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match18",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 18, \r\n    \"id_ganador\": 2, \r\n    \"id_perdedor\": 3, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match19",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 19, \r\n    \"id_ganador\": 4, \r\n    \"id_perdedor\": 5, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match20",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 20, \r\n    \"id_ganador\": 7, \r\n    \"id_perdedor\": 6, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match21",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 21, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 8, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match22",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 22, \r\n    \"id_ganador\": 10, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 1, \r\n    \"goles_perdedor\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match23",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 23, \r\n    \"id_ganador\": 13, \r\n    \"id_perdedor\": 12, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Match24",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{endpoint}}/matches/results",
+									"protocol": "http",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"matches",
+										"results"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
 					"name": "Match25",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1328,6 +1679,20 @@
 				},
 				{
 					"name": "Match26",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1361,6 +1726,20 @@
 				},
 				{
 					"name": "Match27",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1394,6 +1773,20 @@
 				},
 				{
 					"name": "Match28",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1427,6 +1820,20 @@
 				},
 				{
 					"name": "Match29",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1460,6 +1867,20 @@
 				},
 				{
 					"name": "Match30",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1493,6 +1914,20 @@
 				},
 				{
 					"name": "Match31",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1526,6 +1961,20 @@
 				},
 				{
 					"name": "Match32",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
