@@ -43,32 +43,54 @@ let hanlderMatches = {
             "The system cant load the result of the match. No rows where affected."
           );
         }
+        if (num_partido <25){
+          //insert the update on the table posiciones
+          let is_draw = goles_ganador === goles_perdedor;
+          let sql = "";
+          let params = [];
+          if (is_draw) {
+            sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo = $2);`;
+            params.push(id_ganador);
+            params.push(id_perdedor);
+            let result = await con.query(sql, params);//camciar * counter
+            if (result.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the points. No rows where affected."
+              );
+            }
+          } else {
+            sql = `UPDATE posiciones SET puntos = puntos +3 WHERE id_equipo = $1;`;
+            params.push(id_ganador);
+            let result = await con.query(sql, params);
+            if (result.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the points. No rows where affected."
+              );
+            }
+            //ingreso la diferencia de goles
+            let dif_goles = Math.abs(goles_ganador - goles_perdedor) ;
+            //ingreso el ajuste al ganador
+            sql = `UPDATE posiciones SET diferenciagoles = diferenciagoles + $1 where id_equipo = $2;`
+            params = [dif_goles, id_ganador]
+            let up_winner = await con.query(sql,params);
+            if (up_winner.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the diferencia de goles. No rows where affected."
+              );
+            }
+            //ingreso el ajuste al perdedor
+            sql = `UPDATE posiciones SET diferenciagoles = diferenciagoles - $1 where id_equipo = $2;`
+            params = [dif_goles, id_perdedor]
+            let up_looser = await con.query(sql,params);
+            if (up_looser.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the diferencia de goles. No rows where affected."
+              );
+            }
+          }
 
-        //insert the update on the table posiciones
-        let is_draw = goles_ganador === goles_perdedor;
-        let sql = "";
-        let params = [];
-        if (is_draw) {
-          sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo= $2);`;
-          params.push(id_ganador);
-          params.push(id_perdedor);
-          let result = await con.query(sql, params);//camciar * counter
-          if (result.rowCount <= 0) {
-            throw new Error(
-              "The system cant change the points. No rows where affected."
-            );
-          }
-        } else {
-          sql = `UPDATE posiciones SET puntos = puntos +3 WHERE id_equipo = $1;`;
-          params.push(id_ganador);
-          let result = await con.query(sql, params);
-          if (result.rowCount <= 0) {
-            throw new Error(
-              "The system cant change the points. No rows where affected."
-            );
-          }
         }
-
+       
         //Calculates the advance of the turnament
         await registerTournamentAdvance(con,num_partido)
         

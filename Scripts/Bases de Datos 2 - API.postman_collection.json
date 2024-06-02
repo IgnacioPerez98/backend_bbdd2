@@ -2008,6 +2008,68 @@
 				}
 			],
 			"description": "Generates a result for each match of the tournament, in order to calculate which is the team winner and test the final steps of the championship"
+		},
+		{
+			"name": "DEBUG",
+			"item": [
+				{
+					"name": "Clear data partidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/debug/clearpartidos",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"debug",
+								"clearpartidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove torunament advance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/debug/clearadvance",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"debug",
+								"clearadvance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RestartPoints",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{endpoint}}/debug/restartpointsteams",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"debug",
+								"restartpointsteams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

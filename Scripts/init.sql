@@ -138,3 +138,5 @@ INSERT INTO partidos (fecha, etapa, id_equipo1, id_equipo2) VALUES
 ('2024-07-10 20:00:00+00', 'Semifinales', null , null), --29   G27 vs G28
 ('2024-07-13 20:00:00+00', '3er Puesto', null , null), --30   P29 vs P30
 ('2024-07-14 20:00:00+00', 'Final', null , null);--31  G29 vs G30
+
+
