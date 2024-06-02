@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "da90cd2d-c41a-49ab-9759-4a9c4b91acc9",
+		"_postman_id": "8f16a769-8982-4ec8-b805-3d67493352de",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "26276677"
 	},
 	"item": [
 		{
@@ -1607,7 +1607,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id_partido\": 1, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 11, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
+									"raw": "{\r\n    \"id_partido\": 24, \r\n    \"id_ganador\": 15, \r\n    \"id_perdedor\": 14, \r\n    \"goles_ganador\": 3, \r\n    \"goles_perdedor\": 2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"

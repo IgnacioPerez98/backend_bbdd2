@@ -352,7 +352,7 @@ const setTeamsFinalStage = async (con, id_equipo1, id_equipo2, id_partido) => {
       counter ++;
     }
     if (id_equipo2 !== null){
-      sql += counter==2? ``:`, `;
+      sql += counter === 2? `, `:` `;
       sql += `id_equipo2 = $${counter}`;
       params.push(id_equipo2);
       counter++;
