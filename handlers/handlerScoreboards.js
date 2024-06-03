@@ -32,7 +32,6 @@ let handlerScoreBoards = {
     assignPointsAfterMatch : async (con, id_partido) => {
         try{
             try{
-                await con.query('BEGIN');
                 let point2 = `WITH predicciones_ganadoras AS (
                     SELECT predicciones.ci_usuario
                     FROM partidos
@@ -69,20 +68,17 @@ let handlerScoreBoards = {
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 //execute the statement that set 2 extras point to users that have aserted the result
                 await con.query(points4,[id_partido]);
-                await con.query('COMMIT');
-                con.release();
                 if(id_partido == 32){//final match
-                    asignPointChampionAndSubChampion();
+                   let result = await asignPointChampionAndSubChampion(con);
+                   if (result.status !== 200){
+                    throw new Error(result.error);
+                   }
                 }
-
+                return {status: 200 , message : "Success"}
             }catch(transactionError){
-                await con.query('ROLLBACK')
                 throw transactionError;
-            }finally{
-                con.release();
             }
         }catch(e){
-            con.release();
             console.error("Error al asignar puntos.",e)
             return {status: 500, error: e.toString()}
         }
@@ -90,12 +86,9 @@ let handlerScoreBoards = {
 
 }
 
-const asignPointChampionAndSubChampion = async () => {
-    let c = null;
+const asignPointChampionAndSubChampion = async (c) => {
     try{
-        c = await PostgresService.getClient().connect()
         try{       
-            await c.query('BEGIN')
              //Assign points tu userts that assert the champion 
             let sql = `WITH predicciones_ganadoras AS (
                 SELECT ci
@@ -119,18 +112,13 @@ const asignPointChampionAndSubChampion = async () => {
             FROM predicciones_ganadoras
             WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`
             await c.query(query)
-
-            await c.query('COMMIT')
         }catch(transactError){
             console.error("Transact error: ", transactError);
-            c.query("ROLLBACK")
             throw transactError;
-        }finally{
-            c.release();
         }
     }catch(e){
         console.error("Error trying to assign the extra point for champion and subchampion");
-        throw new Error("Error trying to assign the extra point for champion and subchampion");
+        return { status: 500, error: "Error trying to assign the extra point for champion and subchampion"}
     }
 }
 module.exports = handlerScoreBoards;

@@ -7,7 +7,7 @@ const authmw = require('../middlewares/authmiddleware')
 /**
  * Obtains all the selections that integrate the tournament.
  */
-router.get('/teams',authmw, async (req,res)=>{
+router.get('/teams', async (req,res)=>{
     try{
         let result  = await handlerTeams.getAll();
         if(result.status == 200){

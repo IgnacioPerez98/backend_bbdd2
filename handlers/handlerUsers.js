@@ -4,19 +4,30 @@ const PostgreService = require('../services/PostgresService');
 
 let hanlderUsers = {
     createUser  : async (ci,username, pass, champion, subchampion) => {
+        let con = null;
         try{
+            con = await PostgreService.getPool().connect()
+            await con.query('BEGIN')
             const query = "INSERT INTO usuario ( ci, username, contrasena, id_campeon, id_subcampeon,es_admin) VALUES ($1, $2 , $3 ,$4 , $5, 0);";
     
-            let res = await PostgreService.query(query, [ci,username, pass,champion, subchampion]);
-            if(res.rowCount > 0){
-                return {status: 200};
+            let res = await con.query(query, [ci,username, pass,champion, subchampion]);
+            if(res.rowCount <= 0){
+                return {status:400, message: "No rows where affected adding the user"};
+                
             }
-            return {status:400, message: "No rows where affected"};
+            //inserto el user en la tabla de puntos
+            query = `INSERT INTO puntos (ci_usuario, puntos) VALUES ( $1, 0)`;
+            let trans_res = await con.query(query, [ci]);
+            if(res.rowCount <= 0){
+                return {status:400, message: "No rows where affected, inserting ci in puntos table"};
+            }
+            return {status: 200};
         }catch(error){
             if(error.code = '23505'){
                 return { status: 400, message: "The user is already registered."}
             }
             console.error("Error creating user: ",error)
+            await con.query('ROLLBACK')
             return {status:500, message: error.message};
 
         }
