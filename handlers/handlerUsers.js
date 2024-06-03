@@ -8,7 +8,7 @@ let hanlderUsers = {
         try{
             con = await PostgreService.getPool().connect()
             await con.query('BEGIN')
-            const query = "INSERT INTO usuario ( ci, username, contrasena, id_campeon, id_subcampeon,es_admin) VALUES ($1, $2 , $3 ,$4 , $5, 0);";
+            let query = "INSERT INTO usuario ( ci, username, contrasena, id_campeon, id_subcampeon,es_admin) VALUES ($1, $2 , $3 ,$4 , $5, 0);";
     
             let res = await con.query(query, [ci,username, pass,champion, subchampion]);
             if(res.rowCount <= 0){
@@ -18,9 +18,10 @@ let hanlderUsers = {
             //inserto el user en la tabla de puntos
             query = `INSERT INTO puntos (ci_usuario, puntos) VALUES ( $1, 0)`;
             let trans_res = await con.query(query, [ci]);
-            if(res.rowCount <= 0){
+            if(trans_res.rowCount <= 0){
                 return {status:400, message: "No rows where affected, inserting ci in puntos table"};
             }
+            await con.query('COMMIT')
             return {status: 200};
         }catch(error){
             if(error.code = '23505'){
@@ -30,6 +31,10 @@ let hanlderUsers = {
             await con.query('ROLLBACK')
             return {status:500, message: error.message};
 
+        }finally{
+            if(con !== null){
+                con.release();
+            }
         }
     },
     modifyPassword : async (ci, password) => {

@@ -60,7 +60,7 @@ router.get('/predict', authmw,async (req, res,next) => {
   try{
 
     let {ci} = req.claims;
-    let { id_partido} = req.body;
+    let { id_partido} = req.params;
     if(
       ci == undefined 
     ){
