@@ -1,4 +1,6 @@
 const PostgresService = require("../services/PostgresService");
+const handlerScoreBoards = require("./handlerScoreboards");
+
 
 let hanlderMatches = {
   loadDataFinishedMatch: async (
@@ -10,8 +12,9 @@ let hanlderMatches = {
     penales_ganador = null,
     penales_perdedor = null
   ) => {
+    let con = null;
     try {
-      let con = await PostgresService.getPool().connect();
+      con = await PostgresService.getPool().connect();
       try {
         await con.query("BEGIN");
         //Insert the result of the match
@@ -19,8 +22,7 @@ let hanlderMatches = {
           id_ganador,
           id_perdedor,
           goles_ganador,
-          goles_perdedor,
-          num_partido,
+          goles_perdedor
         ];
         let counter = 5;
         let query =
@@ -35,45 +37,80 @@ let hanlderMatches = {
           paramsq1.push(penales_perdedor);
           counter++;
         }
-        query += ` WHERE id = $5;`;
+        paramsq1.push(num_partido);
+        query += ` WHERE id = $${counter};`
         let result = await con.query(query, paramsq1);
         if (result.rowCount <= 0) {
           throw new Error(
             "The system cant load the result of the match. No rows where affected."
           );
         }
+        if (num_partido <25){
+          //insert the update on the table posiciones
+          let is_draw = goles_ganador === goles_perdedor;
+          let sql = "";
+          let params = [];
+          if (is_draw) {
+            sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo = $2);`;
+            params.push(id_ganador);
+            params.push(id_perdedor);
+            let result = await con.query(sql, params);//camciar * counter
+            if (result.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the points. No rows where affected."
+              );
+            }
+          } else {
+            sql = `UPDATE posiciones SET puntos = puntos +3 WHERE id_equipo = $1;`;
+            params.push(id_ganador);
+            let result = await con.query(sql, params);
+            if (result.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the points. No rows where affected."
+              );
+            }
+            //ingreso la diferencia de goles
+            let dif_goles = Math.abs(goles_ganador - goles_perdedor) ;
+            //ingreso el ajuste al ganador
+            sql = `UPDATE posiciones SET diferenciagoles = diferenciagoles + $1 where id_equipo = $2;`
+            params = [dif_goles, id_ganador]
+            let up_winner = await con.query(sql,params);
+            if (up_winner.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the diferencia de goles. No rows where affected."
+              );
+            }
+            //ingreso el ajuste al perdedor
+            sql = `UPDATE posiciones SET diferenciagoles = diferenciagoles - $1 where id_equipo = $2;`
+            params = [dif_goles, id_perdedor]
+            let up_looser = await con.query(sql,params);
+            if (up_looser.rowCount <= 0) {
+              throw new Error(
+                "The system cant change the diferencia de goles. No rows where affected."
+              );
+            }
+          }
 
-        //insert the update on the table posiciones
-        let is_draw = goles_ganador === goles_perdedor;
-        let sql = "";
-        let params = [];
-        if (is_draw) {
-          sql = `UPDATE posiciones SET puntos = puntos+ 1 WHERE (id_equipo = $1 OR id_equipo= $2);`;
-          params.push(id_ganador);
-          params.push(id_perdedor);
-          let result = await con.query(sql, [id_ganador, id_perdedor]);
-          if (result.rowCount <= 0) {
-            throw new Error(
-              "The system cant change the points. No rows where affected."
-            );
-          }
-        } else {
-          sql = `UPDATE posiciones SET puntos = puntos +3 WHERE id_equipo = $1;`;
-          params.push(id_ganador);
-          let result = await con.query(sql, params);
-          if (result.rowCount <= 0) {
-            throw new Error(
-              "The system cant change the points. No rows where affected."
-            );
-          }
         }
+       
+        //Calculates the advance of the turnament
+        await registerTournamentAdvance(con,num_partido)
+
+        //asig points after match
+        await handlerScoreBoards.assignPointsAfterMatch(num_partido);
+        
         await con.query("COMMIT");
+        con.release();
+        return { status: 200, message: "Success"}
       } catch (transactError) {
         console.error("Error loading match results: ", transactError);
         await con.query("ROLLBACK");
+        con.release();
+        return { status: 500, error: transactError.message };
       }
     } catch (e) {
       console.error("Error loading match data: ", e);
+      con.release();
       return { status: 500, error: e.message };
     }
   },
@@ -210,14 +247,16 @@ let hanlderMatches = {
       return { status: 500, error: e.toString() };
     }
   },
-  registerTournamentAdvance: async (id_partido) => {
-    try {
-        let c = await PostgresService.getPool().connect();
-        try{
-          await c.query('BEGIN');
-          //fase de grupos
-          if(id_partido < 25){
-            let winner = await getWinnerByStage(c,id_partido);
+};
+module.exports = hanlderMatches;
+const registerTournamentAdvance = async ( c,id_partido) => {
+  try {
+      try{
+        //fase de grupos
+        if(id_partido < 25){
+          let winner = await getWinnerByStage(c,id_partido);
+          if(winner.status ===200) {
+            await c.query('BEGIN');
             //controlar error
             let {result} = winner;
             let team1 = result[0].id_equipo;
@@ -257,74 +296,77 @@ let hanlderMatches = {
                 }
                 break;
             }
+            await c.query('COMMIT');
+            return { status: 200, error: "Final Stage correctly updated" };
+            }
           }else{
-            let winner = await getWinnerByStage(c,id_partido);
-            let id = winner.id_ganador;
-            let perd = winner.id_perdedor;
-            switch(id_partido){
-              case 25:
-                let pt1 = await setTeamsFinalStage(c, id,null,29)
-                if(pt1.status !== 200){
-                  throw new Error("Fallo la actualizacion de partidos");
-                }
-                break;
-              case 26:
-                let pt2 = await setTeamsFinalStage(c, null,id,29)
-                if(pt2.status !== 200){
-                  throw new Error("Fallo la actualizacion de partidos");
-                }
-                break;
-              case 27:
-                let pt3 = await setTeamsFinalStage(c, id,null,30)
-                if(pt3.status !== 200){
-                  throw new Error("Fallo la actualizacion de partidos");
-                }
-                break;
-              case 28:
-                let pt4 = await setTeamsFinalStage(c, null,id,30)
-                if(pt4.status !== 200){
-                  throw new Error("Fallo la actualizacion de partidos");
-                }
-                break;
-              case 29:
-                let gp1 = await setTeamsFinalStage(c,id,null,32);
-                if(gp1.status !== 200){
-                  throw new Error("Fallo la actualización de partidos")
-                }
-                let pp1 = await setTeamsFinalStage(c,perd,null,31);
-                if(pp1.status !== 200){
-                  throw new Error("Fallo la actualización de partidos")
-                }
-                break;
-              case 30:
-                let gp2 = await setTeamsFinalStage(c,null,id,32);
-                if(gp2.status !== 200){
-                  throw new Error("Fallo la actualización de partidos")
-                }
-                let pp2 = await setTeamsFinalStage(c,null,perd,31);
-                if(pp2.status !== 200){
-                  throw new Error("Fallo la actualización de partidos")
-                }
-                break;
-                                                        
+            if (winner.status === 200)  {
+              await c.query('BEGIN');
+              let id = winner.id_ganador;
+              let perd = winner.id_perdedor;
+              switch(id_partido){
+                case 25:
+                  let pt1 = await setTeamsFinalStage(c, id,null,29)
+                  if(pt1.status !== 200){
+                    throw new Error("Fallo la actualizacion de partidos");
+                  }
+                  break;
+                case 26:
+                  let pt2 = await setTeamsFinalStage(c, null,id,29)
+                  if(pt2.status !== 200){
+                    throw new Error("Fallo la actualizacion de partidos");
+                  }
+                  break;
+                case 27:
+                  let pt3 = await setTeamsFinalStage(c, id,null,30)
+                  if(pt3.status !== 200){
+                    throw new Error("Fallo la actualizacion de partidos");
+                  }
+                  break;
+                case 28:
+                  let pt4 = await setTeamsFinalStage(c, null,id,30)
+                  if(pt4.status !== 200){
+                    throw new Error("Fallo la actualizacion de partidos");
+                  }
+                  break;
+                case 29:
+                  let gp1 = await setTeamsFinalStage(c,id,null,32);
+                  if(gp1.status !== 200){
+                    throw new Error("Fallo la actualización de partidos")
+                  }
+                  let pp1 = await setTeamsFinalStage(c,perd,null,31);
+                  if(pp1.status !== 200){
+                    throw new Error("Fallo la actualización de partidos")
+                  }
+                  break;
+                case 30:
+                  let gp2 = await setTeamsFinalStage(c,null,id,32);
+                  if(gp2.status !== 200){
+                    throw new Error("Fallo la actualización de partidos")
+                  }
+                  let pp2 = await setTeamsFinalStage(c,null,perd,31);
+                  if(pp2.status !== 200){
+                    throw new Error("Fallo la actualización de partidos")
+                  }
+                  break;
+                                                          
+              }
+              await c.query('COMMIT');
+              return { status: 200, error: "Final Stage correctly updated" };
             }
 
-          }
-          await c.query('COMMIT');
-        }catch(transactError){
-          await c.query('ROLLBACK');
-          console.error("Error updating tournament data", transactError);
-          throw transactError;
         }
-        return result;
-    } catch (error) {
-      console.error("Error updating tournament fase: ", error);
-      return { status: 500, error: error.message };
-    }
-  },
+      }catch(transactError){
+        await c.query('ROLLBACK');
+        console.error("Error updating tournament data", transactError);
+        throw transactError;
+      }
+      return { status: 200, error: "The provided id does not requiere update the final stage f the match" };
+  } catch (error) {
+    console.error("Error updating tournament fase: ", error);
+    return { status: 500, error: error.message };
+  }
 };
-module.exports = hanlderMatches;
-
 
 const setTeamsFinalStage = async (con, id_equipo1, id_equipo2, id_partido) => {
   try {
@@ -337,12 +379,12 @@ const setTeamsFinalStage = async (con, id_equipo1, id_equipo2, id_partido) => {
       counter ++;
     }
     if (id_equipo2 !== null){
-      sql += counter==2? ``:`, `;
+      sql += counter === 2? `, `:` `;
       sql += `id_equipo2 = $${counter}`;
       params.push(id_equipo2);
       counter++;
     }
-    sql += ` WHERE id_partido = $${counter};`; 
+    sql += ` WHERE id = $${counter};`; 
     params.push(id_partido);
     let resultado = await con.query(sql, params);
     if (resultado.rowCount > 0) {

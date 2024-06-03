@@ -53,3 +53,45 @@ INSERT INTO posiciones (id_equipo, puntos, diferenciagoles) VALUES
 (14, 6 , 1),
 (15, 6 , 3),
 (16, 6 , 2);
+
+--get partidos con nombres de equipo
+
+SELECT 
+    p.id,
+    p.fecha,
+    p.etapa,
+    e1.nombre_seleccion AS equipo1,
+    e2.nombre_seleccion AS equipo2,
+    eg.nombre_seleccion AS ganador,
+    ep.nombre_seleccion AS perdedor,
+    p.goles_ganador,
+    p.goles_perdedor,
+    p.penales_ganador,
+    p.penales_perdedor
+FROM 
+    partidos p
+JOIN 
+    equipos e1 ON p.id_equipo1 = e1.id
+JOIN 
+    equipos e2 ON p.id_equipo2 = e2.id
+JOIN 
+    equipos eg ON p.id_ganador = eg.id
+JOIN 
+    equipos ep ON p.id_perdedor = ep.id;
+
+
+
+
+--get all positions
+SELECT 
+    p.id_equipo, 
+    e.nombre_seleccion, 
+    p.puntos, 
+    p.diferenciagoles 
+FROM 
+    posiciones p
+JOIN 
+    equipos e 
+ON 
+    p.id_equipo = e.id
+order by p.id_equipo ASC;

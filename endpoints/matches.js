@@ -6,10 +6,17 @@ let handlerMatches = require('../handlers/handlerMatches')
 
 //el contro, de acceso es mixto, obtener resultados es publico, pero cargarlo solo puede el admin
 
-router.post('/results', async (req, res, next)=>{
+router.post('/results',auth, async (req, res, next)=>{
     //el admin carga los resultados
     try{
-        let { id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+        /*
+        let { is_admin} = req.claims;
+        if ( is_admin === false){
+
+            return res.status(403).json(errors(403, "Only admins can upload results"))
+        }*/
+ 
+        let { id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor,penales_ganador, penales_perdedor} = req.body;
         if (
         id_partido ==undefined ||
         id_ganador ==undefined ||
@@ -20,7 +27,7 @@ router.post('/results', async (req, res, next)=>{
         return res.status(400).json(errors(400, "One of the params was not valid, check the body of the request."))
         }
 
-        let resultado =await handlerMatches.loadDataFinishedMatch(id_partido,id_ganador,id_perdedor,goles_ganador, goles_perdedor);
+        let resultado =await handlerMatches.loadDataFinishedMatch(id_partido,id_ganador,id_perdedor,goles_ganador, goles_perdedor,penales_ganador,penales_perdedor);
         if(resultado.status == 200){
             return  res.status(resultado.status).json(errors(resultado.status,resultado.message));
         }else{
