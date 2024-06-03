@@ -97,7 +97,7 @@ let hanlderMatches = {
         await registerTournamentAdvance(con,num_partido)
 
         //asig points after match
-        await handlerScoreBoards.assignPointsAfterMatch(num_partido);
+        await handlerScoreBoards.assignPointsAfterMatch(con,num_partido);
         
         await con.query("COMMIT");
         con.release();
