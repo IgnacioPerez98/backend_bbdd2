@@ -29,6 +29,7 @@ let handlerScoreBoards = {
             return {status: 500, error: e.toString()}
         }
     },
+    /** A BORRAR */
     assignPointsAfterMatch : async (con, id_partido) => {
         try{
             try{

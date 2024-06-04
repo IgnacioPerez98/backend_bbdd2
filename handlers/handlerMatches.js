@@ -100,13 +100,11 @@ let hanlderMatches = {
         }
         await con.query("COMMIT");
 
-        await con.query("BEGIN");
         //asig points after match
         let resultado =  await handlerScoreBoards.calculatepredictionpoints(con,num_partido);
         if(resultado.status !== 200){
             throw new Error("Error asigning points after the match.")
-        }
-        await con.query("COMMIT");        
+        }   
         con.release();
         return { status: 200, message: "Success"}
       } catch (transactError) {
