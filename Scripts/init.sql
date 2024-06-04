@@ -1,6 +1,10 @@
 \c backend;
 
--- Create the sequence manually, set MINVALUE to 0, and start from 0
+
+--////////////////////////
+--////DEFINE TABLES///////
+--////////////////////////
+
 CREATE SEQUENCE equipos_id_seq MINVALUE 0 START 0;
 
 create table equipos (
@@ -17,7 +21,9 @@ create table  usuario (
     contrasena text not null,
     id_campeon integer,
     id_subcampeon integer,
-    es_admin integer default 0
+    es_admin integer default 0,
+    CONSTRAINT fk_campeon FOREIGN KEY(id_campeon) REFERENCES equipos(id),
+    CONSTRAINT fk_subcampeon FOREIGN KEY(id_subcampeon) REFERENCES equipos(id)
 );
 
 create table  partidos (
@@ -31,7 +37,11 @@ create table  partidos (
     goles_ganador integer,
     goles_perdedor integer,
     penales_ganador integer,
-    penales_perdedor integer
+    penales_perdedor integer,
+    CONSTRAINT fk_id_e1 FOREIGN KEY(id_equipo1) REFERENCES equipos(id),
+    CONSTRAINT fk_id_e2 FOREIGN KEY(id_equipo2) REFERENCES equipos(id),
+    CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
+    CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id)
 );
 
 create table predicciones (
@@ -41,24 +51,45 @@ create table predicciones (
     id_ganador integer,
     id_perdedor integer,
     goles_ganador integer,
-    goles_perdedor integer
+    goles_perdedor integer,
+    penales_ganador integer,
+    penales_perdedor integer,
+    CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
+    CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
+    CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
+    CONSTRAINT fk_id_partido FOREIGN KEY(id_partido) REFERENCES partidos(id)
+
 );
 
 --refers to users points
 create table puntos (
     ci_usuario integer primary key,
-    puntos integer default 0
+    puntos integer default 0,
+    CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci)
 );
 
 create table posiciones (
     id_equipo integer primary key,
     puntos integer not null default 0, 
-    diferenciagoles integer not null default 0
+    diferenciagoles integer not null default 0,
+    CONSTRAINT fk_id_partido FOREIGN KEY(id_equipo) REFERENCES equipos(id)
 );
 
 
---Startup data
+--////////////////////////
+--//////CONSTRAINS////////
+--////////////////////////
 
+--predicciones, usuario partido unicas
+ALTER TABLE predicciones ADD CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido);
+
+
+
+
+
+--////////////////////////
+--//////SETUP DATA////////
+--////////////////////////
 
 --creo el admin
 --INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);

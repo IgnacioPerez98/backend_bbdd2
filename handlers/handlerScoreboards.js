@@ -29,6 +29,7 @@ let handlerScoreBoards = {
             return {status: 500, error: e.toString()}
         }
     },
+    /** A BORRAR */
     assignPointsAfterMatch : async (con, id_partido) => {
         try{
             try{
@@ -49,7 +50,8 @@ let handlerScoreBoards = {
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 await con.query(point2,[id_partido])
-
+                await con.query('COMMIT')
+                await con.query('BEGIN')
                 //put a value where whe have exact match, it apply 2 point more to asign 4 points in total
                 let points4 = `WITH predicciones_ganadoras AS (
                     SELECT predicciones.ci_usuario
@@ -67,7 +69,13 @@ let handlerScoreBoards = {
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 //execute the statement that set 2 extras point to users that have aserted the result
-                await con.query(points4,[id_partido]);
+                let fourpoint = await con.query(points4,[id_partido]);
+                if(fourpoint.rowCount <= 0) {
+                    await con.query('ROLLBACK')
+                    throw new Error("Error agregating extra values to points")
+                }else{
+                    await con.query("COMMIT")
+                }
                 if(id_partido == 32){//final match
                    let result = await asignPointChampionAndSubChampion(con);
                    if (result.status !== 200){
@@ -82,9 +90,56 @@ let handlerScoreBoards = {
             console.error("Error al asignar puntos.",e)
             return {status: 500, error: e.toString()}
         }
+    },
+    calculatepredictionpoints : async (con, id_partido) => {
+        try {
+            let query = `
+                WITH predicciones_ganadoras AS (
+                    SELECT predicciones.ci_usuario,
+                           (CASE 
+                               WHEN partidos.goles_ganador = predicciones.goles_ganador 
+                                    AND partidos.goles_perdedor = predicciones.goles_perdedor THEN 4
+                               ELSE 2
+                            END) AS puntos_a_asignar
+                    FROM partidos
+                    JOIN predicciones ON partidos.id = predicciones.id_partido
+                    WHERE partidos.id = $1
+                    AND partidos.id_ganador = predicciones.id_ganador
+                    AND partidos.id_perdedor = predicciones.id_perdedor
+                )
+                UPDATE puntos
+                SET puntos = puntos + predicciones_ganadoras.puntos_a_asignar
+                FROM predicciones_ganadoras
+                WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;
+            `;
+            
+            await con.query('BEGIN');
+            let result = await con.query(query, [id_partido]);
+    
+            if (result.rowCount <= 0) {
+                await con.query('ROLLBACK');
+                throw new Error("Error aggregating points");
+            } else {
+                await con.query('COMMIT');
+            }
+    
+            if (id_partido == 32) { // Final match
+                let championResult = await asignPointChampionAndSubChampion(con);
+                if (championResult.status !== 200) {
+                    throw new Error(championResult.error);
+                }
+            }
+    
+            return { status: 200, message: "Success" };
+        } catch (e) {
+            await con.query('ROLLBACK');
+            console.error("Error al asignar puntos.", e);
+            return { status: 500, error: e.toString() };
+        }
     }
 
 }
+
 
 const asignPointChampionAndSubChampion = async (c) => {
     try{

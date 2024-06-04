@@ -21,6 +21,9 @@ let handlerPredictions = {
                 return {status: 500, error: "No rows where affected."}
             }
         }catch(e){
+            if(e.code == '23505') {
+                return { status: 406, error: "Exists a prediction for the provided match, try update it."}
+            }
             console.error("Error adding a new predition:",e)
             return {status: 500, error: e.toString()}
         }
@@ -28,7 +31,7 @@ let handlerPredictions = {
     /**
      * Updates the prediction of a determinated match
      */
-    updateMatchPrediction: async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor) => {
+    updateMatchPrediction: async (ci, idpartido, id_ganador, id_perdedor, goles_ganador, goles_perdedor, penales_ganador,penales_perdedor) => {
         try {
             let sql = "UPDATE predicciones SET ";
             let params = [];
@@ -50,6 +53,14 @@ let handlerPredictions = {
                 sql += "goles_perdedor = $" + paramIndex++ + ", ";
                 params.push(goles_perdedor);
             }
+            if ( penales_ganador !== undefined && id_partido > 24){
+                sql += "penales_ganador = $" + paramIndex++ + ", ";
+                params.push(penales_ganador);
+            }
+            if ( penales_perdedor !== undefined && id_partido > 24){
+                sql += "penales_perdedor = $" + paramIndex++ + ", ";
+                params.push(penales_perdedor);
+            }
             sql = sql.replace(/,\s*$/, '');
     
             sql += " WHERE ci_usuario = $" + paramIndex++ + " AND id_partido = $" + paramIndex++;
@@ -59,7 +70,7 @@ let handlerPredictions = {
             if (resultado.rowCount > 0) {
                 return { status: 200, message: "Prediction updated successfully." };
             } else {
-                return {status: 200, predicts: []}
+                return {status: 406, error: "Check request params, patch dont affect any row. Make sure theres is a prediction with that id_partido."}
             }
     
         } catch (e) {

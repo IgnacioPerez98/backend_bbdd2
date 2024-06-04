@@ -80,6 +80,13 @@ if (process.env.environment === 'DEBUG'){
           where id_equipo < 32;
       `);
       return res.status(200).json({message: "OK"})
+  } ) 
+  app.post('/debug/restartpuntosuser', async (req, res)=> {
+    await ps.getPool().query(
+      `UPDATE puntos
+      SET puntos = 0;
+      `);
+      return res.status(200).json({message: "OK"})
   } )
 }
 

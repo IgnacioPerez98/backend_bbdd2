@@ -94,12 +94,17 @@ let hanlderMatches = {
         }
        
         //Calculates the advance of the turnament
-        await registerTournamentAdvance(con,num_partido)
+        let tournament_Advance =  await registerTournamentAdvance(con,num_partido)
+        if(tournament_Advance.status !== 200) {
+          throw new Error("Error registring tournament advance")
+        }
+        await con.query("COMMIT");
 
         //asig points after match
-        await handlerScoreBoards.assignPointsAfterMatch(con,num_partido);
-        
-        await con.query("COMMIT");
+        let resultado =  await handlerScoreBoards.calculatepredictionpoints(con,num_partido);
+        if(resultado.status !== 200){
+            throw new Error("Error asigning points after the match.")
+        }   
         con.release();
         return { status: 200, message: "Success"}
       } catch (transactError) {

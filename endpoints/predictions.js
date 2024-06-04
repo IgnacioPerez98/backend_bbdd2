@@ -24,7 +24,7 @@ router.post('/predict',authmw,hmiddleware, async (req, res, next) => {
     if(resultado.status == 200){
         return  res.status(resultado.status).json(errors(resultado.status,resultado.message));
     }else{
-      return res.status(resultado.status).json(errors(resultado.status,resultado.error));
+      return res.status(resultado.status).json(errors(resultado.status, resultado.error));
     }
   }catch(e){
     console.error("Predition PostError: ",e);
@@ -37,7 +37,7 @@ router.post('/predict',authmw,hmiddleware, async (req, res, next) => {
 router.patch('/predict',authmw,hmiddleware, async (req, res) => {
   try{
     let {ci} = req.claims;
-    let {id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor} = req.body;
+    let {id_partido, id_ganador, id_perdedor, goles_ganador, goles_perdedor, penales_ganador, penales_perdedor} = req.body;
     //The other values are checked when the handler join the sql statement.
     if (
       id_partido == undefined ||
@@ -45,11 +45,11 @@ router.patch('/predict',authmw,hmiddleware, async (req, res) => {
     ){
       return res.status(400).json(errors(400, "One of the params was not valid, check the body of the request."))
     }
-    let resultado = await handlerPredictions.updateMatchPrediction(ci,id_partido,id_ganador,id_perdedor, goles_ganador,goles_perdedor);
+    let resultado = await handlerPredictions.updateMatchPrediction(ci,id_partido,id_ganador,id_perdedor, goles_ganador,goles_perdedor, penales_ganador,penales_perdedor);
     if(resultado.status == 200){
       return  res.status(resultado.status).json(errors(resultado.status,resultado.message));
     }else{
-      return res.status(resultado.status).json(errors(resultado.status,resultado.error));
+      return res.status(resultado.status).json(errors(resultado.status, resultado.error));
     }
   }catch(e){
     console.error("Predition PostError: ",e);
