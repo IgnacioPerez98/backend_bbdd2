@@ -49,7 +49,8 @@ let handlerScoreBoards = {
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 await con.query(point2,[id_partido])
-
+                await con.query('COMMIT')
+                await con.query('BEGIN')
                 //put a value where whe have exact match, it apply 2 point more to asign 4 points in total
                 let points4 = `WITH predicciones_ganadoras AS (
                     SELECT predicciones.ci_usuario
@@ -67,7 +68,13 @@ let handlerScoreBoards = {
                 FROM predicciones_ganadoras
                 WHERE puntos.ci_usuario = predicciones_ganadoras.ci_usuario;`;
                 //execute the statement that set 2 extras point to users that have aserted the result
-                await con.query(points4,[id_partido]);
+                let fourpoint = await con.query(points4,[id_partido]);
+                if(fourpoint.rowCount <= 0) {
+                    await con.query('ROLLBACK')
+                    throw new Error("Error agregating extra values to points")
+                }else{
+                    await con.query("COMMIT")
+                }
                 if(id_partido == 32){//final match
                    let result = await asignPointChampionAndSubChampion(con);
                    if (result.status !== 200){
