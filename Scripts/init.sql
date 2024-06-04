@@ -1,6 +1,12 @@
+
+
 \c backend;
 
--- Create the sequence manually, set MINVALUE to 0, and start from 0
+
+--////////////////////////
+--////DEFINE TABLES///////
+--////////////////////////
+
 CREATE SEQUENCE equipos_id_seq MINVALUE 0 START 0;
 
 create table equipos (
@@ -57,8 +63,20 @@ create table posiciones (
 );
 
 
---Startup data
+--////////////////////////
+--//////CONSTRAINS////////
+--////////////////////////
 
+--predicciones, usuario partido unicas
+ALTER TABLE predicciones ADD CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido);
+
+
+
+
+
+--////////////////////////
+--//////SETUP DATA////////
+--////////////////////////
 
 --creo el admin
 --INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
