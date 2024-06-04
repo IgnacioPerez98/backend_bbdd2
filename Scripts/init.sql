@@ -1,5 +1,3 @@
-
-
 \c backend;
 
 
@@ -24,8 +22,8 @@ create table  usuario (
     id_campeon integer,
     id_subcampeon integer,
     es_admin integer default 0,
-    CONSTRAINT fk_campeon FOREIGN KEY(id_campeon) REFERENCES equipos(ci),
-    CONSTRAINT fk_subcampeon FOREIGN KEY(ci_usuario) REFERENCES equipos(ci)
+    CONSTRAINT fk_campeon FOREIGN KEY(id_campeon) REFERENCES equipos(id),
+    CONSTRAINT fk_subcampeon FOREIGN KEY(id_subcampeon) REFERENCES equipos(id)
 );
 
 create table  partidos (
