@@ -102,7 +102,7 @@ let hanlderMatches = {
 
         await con.query("BEGIN");
         //asig points after match
-        let resultado =  await handlerScoreBoards.assignPointsAfterMatch(con,num_partido);
+        let resultado =  await handlerScoreBoards.calculatepredictionpoints(con,num_partido);
         if(resultado.status !== 200){
             throw new Error("Error asigning points after the match.")
         }
