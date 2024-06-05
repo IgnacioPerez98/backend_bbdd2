@@ -41,7 +41,7 @@ create table  partidos (
     CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
     CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
     CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
-    CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_ganador = id_equipo2),
+    CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_perdedor = id_equipo2),
     CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
     CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
 );
