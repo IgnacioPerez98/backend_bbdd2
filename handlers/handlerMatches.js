@@ -423,18 +423,18 @@ const getWinnerByStage = async (con, id_partido) => {
     switch (id_partido) {
       case 18:
         //Grupo A
-        params = [1, 4];
+        params = [0, 3];
         break;
       case 20:
         //Grupo B
-        params = [5, 8];
+        params = [4, 7];
         break;
       case 22:
         //Grupo C
-        params = [9, 12];
+        params = [8, 11];
         break;
       case 24:
-        params = [13, 16];
+        params = [12, 15];
         break;
       case 25:
         params = [id_partido];
