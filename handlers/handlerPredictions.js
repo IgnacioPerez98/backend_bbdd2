@@ -42,7 +42,7 @@ let handlerPredictions = {
                 params.push(id_ganador);
             }
             if (id_perdedor !== undefined) {
-                sql += "id_perdedores = $" + paramIndex++ + ", ";
+                sql += "id_perdedor = $" + paramIndex++ + ", ";
                 params.push(id_perdedor);
             }
             if (goles_ganador !== undefined) {
