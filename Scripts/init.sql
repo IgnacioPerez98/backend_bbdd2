@@ -1,6 +1,4 @@
 \c backend;
-
-
 --////////////////////////
 --////DEFINE TABLES///////
 --////////////////////////
@@ -9,7 +7,7 @@ CREATE SEQUENCE equipos_id_seq MINVALUE 0 START 0;
 
 create table equipos (
     id integer PRIMARY KEY DEFAULT nextval('equipos_id_seq'),
-    nombre_seleccion varchar(80)
+    nombre_seleccion varchar(80) UNIQUE
 );
 
 -- Alter the table to set the default value for the id column
@@ -20,7 +18,7 @@ create table  usuario (
     username text not null,
     contrasena text not null,
     id_campeon integer,
-    id_subcampeon integer,
+    id_subcampeon integer ,
     es_admin integer default 0,
     CONSTRAINT fk_campeon FOREIGN KEY(id_campeon) REFERENCES equipos(id),
     CONSTRAINT fk_subcampeon FOREIGN KEY(id_subcampeon) REFERENCES equipos(id)
@@ -41,11 +39,15 @@ create table  partidos (
     CONSTRAINT fk_id_e1 FOREIGN KEY(id_equipo1) REFERENCES equipos(id),
     CONSTRAINT fk_id_e2 FOREIGN KEY(id_equipo2) REFERENCES equipos(id),
     CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
-    CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id)
+    CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
+    CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
+    CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_ganador = id_equipo2),
+    CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
+    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
 );
 
 create table predicciones (
-    id serial primary key ,
+    id serial primary key not null,
     ci_usuario integer not null,
     id_partido integer,
     id_ganador integer,
@@ -54,18 +56,22 @@ create table predicciones (
     goles_perdedor integer,
     penales_ganador integer,
     penales_perdedor integer,
+    CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido),
     CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
     CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
     CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
-    CONSTRAINT fk_id_partido FOREIGN KEY(id_partido) REFERENCES partidos(id)
+    CONSTRAINT fk_id_partido FOREIGN KEY(id_partido) REFERENCES partidos(id),
+    CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
+    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
 
 );
 
 --refers to users points
 create table puntos (
-    ci_usuario integer primary key,
+    ci_usuario integer primary key not null,
     puntos integer default 0,
-    CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci)
+    CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
+    CONSTRAINT check_points CHECK (puntos >= 0)
 );
 
 create table posiciones (
@@ -74,18 +80,6 @@ create table posiciones (
     diferenciagoles integer not null default 0,
     CONSTRAINT fk_id_partido FOREIGN KEY(id_equipo) REFERENCES equipos(id)
 );
-
-
---////////////////////////
---//////CONSTRAINS////////
---////////////////////////
-
---predicciones, usuario partido unicas
-ALTER TABLE predicciones ADD CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido);
-
-
-
-
 
 --////////////////////////
 --//////SETUP DATA////////
