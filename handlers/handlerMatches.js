@@ -175,7 +175,8 @@ let hanlderMatches = {
                     LEFT JOIN
                         equipos e1 ON p.id_equipo1 = e1.id
                     LEFT JOIN
-                        equipos e2 ON p.id_equipo2 = e2.id;`;
+                        equipos e2 ON p.id_equipo2 = e2.id
+                    ORDER BY p.id ASC;`;
       let result = await PostgresService.query(sql);
       if (result.rowCount > 0) {
         return { status: 200, matches: result.rows };
@@ -353,8 +354,7 @@ const registerTournamentAdvance = async ( c,id_partido) => {
                   if(pp2.status !== 200){
                     throw new Error("Fallo la actualización de partidos")
                   }
-                  break;
-                                                          
+                  break;                                   
               }
               await c.query('COMMIT');
               return { status: 200, error: "Final Stage correctly updated" };
