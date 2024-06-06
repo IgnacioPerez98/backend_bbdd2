@@ -3,7 +3,7 @@ const PostgresService = require('../services/PostgresService')
 let handlerScoreBoards = {
     getPointsByUser : async (ci_usuario) => {
         try{
-            let sql = `SELECT * FROM puntos WHERE ci_usuario = $1;`;
+            let sql = `SELECT P.ci_usuario, U.username, P.puntos FROM puntos P join usuario U on P.ci_usuario = U.ci WHERE P.ci_usuario = $1;`;
             let resultado = await PostgresService.query(sql, [ci_usuario]);
             if(resultado.rowCount > 0){
                 return {status: 200, scoreboards: resultado.rows[0]};
@@ -17,7 +17,7 @@ let handlerScoreBoards = {
     },
     getAllUserPoints : async () => {
         try{
-            let sql = `SELECT * FROM puntos ORDER BY puntos ASC;`;
+            let sql = `SELECT P.ci_usuario, U.username, P.puntos FROM puntos P join usuario U on P.ci_usuario = U.ci ORDER BY P.puntos ASC ;;`;
             let resultado = await PostgresService.query(sql);
             if(resultado.rowCount > 0){
                 return {status: 200, scoreboards: resultado.rows};
@@ -116,12 +116,8 @@ let handlerScoreBoards = {
             await con.query('BEGIN');
             let result = await con.query(query, [id_partido]);
     
-            if (result.rowCount <= 0) {
-                await con.query('ROLLBACK');
-                throw new Error("Error aggregating points");
-            } else {
-                await con.query('COMMIT');
-            }
+            
+            await con.query('COMMIT');
     
             if (id_partido == 32) { // Final match
                 let championResult = await asignPointChampionAndSubChampion(con);
