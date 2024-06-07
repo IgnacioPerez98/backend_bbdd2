@@ -259,8 +259,8 @@ const registerTournamentAdvance = async ( c,id_partido) => {
   try {
       try{
         //fase de grupos
+        let winner = await getWinnerByStage(c,id_partido);
         if(id_partido < 25){
-          let winner = await getWinnerByStage(c,id_partido);
           if(winner.status ===200) {
             await c.query('BEGIN');
             //controlar error
