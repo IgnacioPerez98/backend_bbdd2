@@ -43,7 +43,10 @@ create table  partidos (
     CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
     CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_perdedor = id_equipo2),
     CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
-    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
+    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador ),
+    CONSTRAINT check_penales_ganador CHECK ( penales_ganador is null OR penales_ganador > penales_perdedor ),
+    CONSTRAINT check_penales_perdedor CHECK ( penales_perdedor is null OR penales_perdedor < penales_ganador ),
+    CONSTRAINT check_penales_not_null CHECK ( (penales_perdedor is null AND penales_ganador is null) OR (penales_perdedor is not null AND penales_ganador is not null) )
 );
 
 create table predicciones (
