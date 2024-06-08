@@ -52,7 +52,7 @@ const Notify = (texto, id) =>{
     try {
         wsocket.clients.forEach((client) => {
             id = []
-            if(id === undefined || id === null){
+            if(id === undefined){
                 //no se define es un broadcast
                 client.send(texto);
             }else{

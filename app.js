@@ -3,7 +3,6 @@ const app = express();
 const cors = require('cors');
 const http = require('http');
 const WebSocket = require('ws');
-const notifyService = require('./services/notificationservice')
 const dotenv = require('dotenv')
 
 dotenv.config();
@@ -37,10 +36,16 @@ app.use('/signin', signinRouter);
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-await setWS(wss);
-await wsCreateCon();
+setWS(wss);
+wsCreateCon().then(
+    ok => console.log("Created WS")
+).catch(e => {
+    console.error(`Error wn ws : ${e}`)
+});
 
-await scheduleMatchNotification();
+scheduleMatchNotification().then(
+    ok => console.log("Notification service running"),
+).catch( e => console.error(`Error wn ws : ${e}`) );
 
 
 //debug endpoints

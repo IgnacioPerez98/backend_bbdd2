@@ -360,9 +360,7 @@ const getMatchDate = async (id_partido) => {
                           equipos e1 ON p.id_equipo1 = e1.id
                       LEFT JOIN
                           equipos e2 ON p.id_equipo2 = e2.id
-                      WHERE p.id = $1
-                      LIMIT 1
-                      ;`;
+                      WHERE p.id = $1;`;
         let result = await PostgresService.query(query, [id_partido]);
         if (result.rowCount > 0) {
           return { status: 200, match: result.rows[0] };
@@ -457,4 +455,5 @@ module.exports = {
     getMatchDate,
     getAllMatches,
     getMatchByRange
+
 }
