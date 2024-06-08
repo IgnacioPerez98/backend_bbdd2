@@ -1,5 +1,5 @@
 const errors = require('../services/errorsmessages')
-const hanlderMatches = require('../handlers/handlerMatches');
+const {getMatchDate} = require('../handlers/handlerMatches');
 
 
 //https://esqsoft.com/javascript_examples/date-to-epoch
@@ -10,7 +10,7 @@ const matchhourmiddleware = async(req, res, next) => {
         console.error("Middleware error 400", "You must provide a field id_partido in the body");
         return res.status(400).json(errors(400, "You must provide a field id_partido in the body"))
     }
-    let partido = await hanlderMatches.getMatchDate(id_partido);
+    let partido = await getMatchDate(id_partido);
     if(partido.status !== 200){
         console.error("Middleware error 400", partido.error);
         return res.status(400).json(errors(400, `We cant find match with id ${id_partido}`))

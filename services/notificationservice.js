@@ -1,7 +1,7 @@
 const userHandler = require("../handlers/handlerUsers");
 const schedule = require('node-schedule')
-const handlerMatches = require('../handlers/handlerMatches')
-const handlerPredicciones = require('../handlers/handlerPredictions')
+const {getMatchDate} = require("../handlers/handlerMatches");
+const {getIdsWithoutResult} = require("../handlers/handlerPredictions");
 
 
 let wsocket;
@@ -68,11 +68,11 @@ const Notify = (texto, id) =>{
 
 const scheduleMatchNotification = async () =>{
     try {
-        let partidos = await handlerMatches.getMatchandDate();
+        let partidos = await getMatchDate();
         if(partidos.status === 200){
             let {matches} = partidos;
             matches.forEach( (partido) => {
-                let horaPartido = new Date(Date.parse(partido.fecha))//aca hay cagada
+                let horaPartido = new Date(Date.parse(partido.fecha))
                 horaPartido = horaPartido.setHours(horaPartido.getHours() - 1);
                 let mensaje = "";
                 if(partido.id <25){
@@ -108,7 +108,7 @@ const scheduleMatchNotification = async () =>{
 
 const notifyNotPrediction = async (id_partido) => {
     try{
-        let res = await handlerPredicciones.getIdsWithoutResult(id_partido);
+        let res = await getIdsWithoutResult(id_partido);
         if(res.status!== 200){
             console.error("Error getting notification")
         }else{
