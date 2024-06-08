@@ -1,5 +1,6 @@
 
 const PostgresService = require("../services/PostgresService");
+const {assignPointsAfterMatch} = require('./handlerScoreboard')
 
 const loadDataFinishedMatch = async (
     num_partido,
@@ -90,21 +91,17 @@ const loadDataFinishedMatch = async (
           }
 
         }
-       
         //Calculates the advance of the turnament
         let tournament_Advance =  await registerTournamentAdvance(con,num_partido)
         if(tournament_Advance.status !== 200) {
           throw new Error("Error registring tournament advance")
         }
         await con.query("COMMIT");
-
-        await con.query("BEGIN");
         //asig points after match
-        let resultado =  await handlerScoreBoards.assignPointsAfterMatch(con,num_partido);
+        let resultado =  await assignPointsAfterMatch(con,num_partido);
         if(resultado.status !== 200){
             throw new Error("Error asigning points after the match.")
-        }
-        await con.query("COMMIT");        
+        } 
         con.release();
         return { status: 200, message: "Success"}
       } catch (transactError) {
@@ -124,10 +121,10 @@ const loadDataFinishedMatch = async (
 const registerTournamentAdvance = async ( c,id_partido) => {
   
     try {
+      let winner = await getWinnerByStage(c,id_partido);
         try{
           //fase de grupos
           if(id_partido < 25){
-            let winner = await getWinnerByStage(c,id_partido);
             if(winner.status ===200) {
               //controlar error
               let {result} = winner;
@@ -172,8 +169,8 @@ const registerTournamentAdvance = async ( c,id_partido) => {
               }
             }else{
               if (winner.status === 200)  {
-                let id = winner.id_ganador;
-                let perd = winner.id_perdedor;
+                let id = winner.result[0].id_ganador;
+                let perd = winner.result[0].id_perdedor;
                 switch(id_partido){
                   case 25:
                     let pt1 = await setTeamsFinalStage(c, id,null,29)
@@ -409,7 +406,6 @@ const getAllMatches = async () => {
         return { status: 500, error: e.toString() };
       }
 }
-
 
 const getMatchByRange = async (initRange, endRange) => {
     try {

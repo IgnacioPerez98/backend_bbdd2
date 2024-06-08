@@ -2,7 +2,7 @@ const PostgresService = require('../services/PostgresService')
 
 const getPointsByUser = async (ci_usuario) => {
     try{
-        let sql = `SELECT * FROM puntos WHERE ci_usuario = $1;`;
+        let sql = `SELECT P.ci_usuario,U.username,P.puntos FROM puntos P LEFT JOIN usuario U on P.ci_usuario = U.ci WHERE ci_usuario = $1 ORDER BY puntos ASC;`;
         let resultado = await PostgresService.query(sql, [ci_usuario]);
         if(resultado.rowCount > 0){
             return {status: 200, scoreboards: resultado.rows[0]};
@@ -18,7 +18,7 @@ const getPointsByUser = async (ci_usuario) => {
 
 const getAllUserPoints = async () => {
     try{
-        let sql = `SELECT * FROM puntos ORDER BY puntos ASC;`;
+        let sql = `SELECT P.ci_usuario,U.username,P.puntos FROM puntos P LEFT JOIN usuario U on P.ci_usuario = U.ci ORDER BY puntos ASC;`;
         let resultado = await PostgresService.query(sql);
         if(resultado.rowCount > 0){
             return {status: 200, scoreboards: resultado.rows};

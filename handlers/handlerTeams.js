@@ -15,7 +15,7 @@ const getAllTeams = async () => {
     }
 }
 
-const getTeamById = async () => {
+const getTeamById = async (id) => {
     try{
         let query = "SELECT * FROM equipos WHERE id = $1"
         let team = await PostgresServide.query(query, [id])
