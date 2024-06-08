@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fbd431ee-9db5-4677-bc50-2dddeddfa3ef",
+		"_postman_id": "b19f677b-28f8-4a69-a674-da9b058aa857",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26000907"
+		"_exporter_id": "26276677"
 	},
 	"item": [
 		{
@@ -120,6 +120,90 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "SignUp-UserCamp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": 3,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/signup/user",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"signup",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp-UserSubCamp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": 2,\n    \"username\": \"Campoen\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 11,\n    \"id_subchampion\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/signup/user",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"signup",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUp-UserSubCampyCamp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ci\": 4,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/signup/user",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"signup",
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"description": "Handle the logic of the request related to create a new user, and give acces to the app"
@@ -205,7 +289,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_partido\": 1, \n    \"id_ganador\": 0, \n    \"id_perdedor\": 3, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 1\n}",
+							"raw": "{\n    \"id_partido\": 1, \n    \"id_ganador\": 3, \n    \"id_perdedor\": 0, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -238,7 +322,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_partido\": 1, \n    \"goles_ganador\": 5, \n    \"goles_perdedor\": 2\n}",
+							"raw": "{\n    \"id_partido\": 1, \n    \"goles_ganador\": 3, \n    \"goles_perdedor\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1992,7 +2076,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id_partido\": 32, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 0, \r\n    \"goles_ganador\": 0, \r\n    \"goles_perdedor\": 0,\r\n    \"penales_gandor\": 4,\r\n    \"penales_perdedor\": 3\r\n}",
+							"raw": "{\r\n    \"id_partido\": 32, \r\n    \"id_ganador\": 9, \r\n    \"id_perdedor\": 0, \r\n    \"goles_ganador\": 0, \r\n    \"goles_perdedor\": 0,\r\n    \"penales_ganador\": 4,\r\n    \"penales_perdedor\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
