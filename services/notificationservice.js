@@ -1,10 +1,10 @@
 const userHandler = require("../handlers/handlerUsers");
 const schedule = require('node-schedule')
-const {getMatchDate} = require("../handlers/handlerMatches");
+const {getAllMatches} = require("../handlers/handlerMatches");
 const {getIdsWithoutResult} = require("../handlers/handlerPredictions");
 
 
-let wsocket;
+let wsocket = null;
 const clients = new Map();
 
 const wsCreateCon = async () => {
@@ -68,7 +68,7 @@ const Notify = (texto, id) =>{
 
 const scheduleMatchNotification = async () =>{
     try {
-        let partidos = await getMatchDate();
+        let partidos = await getAllMatches();
         if(partidos.status === 200){
             let {matches} = partidos;
             matches.forEach( (partido) => {

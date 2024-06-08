@@ -24,7 +24,7 @@ const preditcionRouter = require('./endpoints/predictions');
 const teamsRouter = require('./endpoints/teams');
 const matchesRouter = require('./endpoints/matches');
 const scoreboardRoute = require('./endpoints/scoreboards')
-const {wsCreateCon, setWS, scheduleMatchNotification} = require("./services/notificationservice");
+const handlerNotification = require("./services/notificationservice");
 //add Routes
 app.use('/prediction', preditcionRouter);
 app.use('/signup',signupRouter );
@@ -36,14 +36,14 @@ app.use('/signin', signinRouter);
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-setWS(wss);
-wsCreateCon().then(
+handlerNotification.setWS(wss);
+handlerNotification.wsCreateCon().then(
     ok => console.log("Created WS")
 ).catch(e => {
     console.error(`Error wn ws : ${e}`)
 });
 
-scheduleMatchNotification().then(
+handlerNotification.scheduleMatchNotification().then(
     ok => console.log("Notification service running"),
 ).catch( e => console.error(`Error wn ws : ${e}`) );
 
