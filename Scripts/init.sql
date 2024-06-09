@@ -79,7 +79,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trigger_puntaje_final
-AFTER INSERT ON partidos
+AFTER UPDATE ON partidos
 FOR EACH ROW
 EXECUTE FUNCTION puntaje_final();
 
