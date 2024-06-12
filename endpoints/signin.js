@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const handlerJWT = require('../handlers/handlerjwt');
-const handlerUser= require('../handlers/handlerUsers');
 const errors = require('../services/errorsmessages')
 const authmw = require('../middlewares/authmiddleware')
-
-
-const notify = require('../services/notificationservice');
+const {signin, modifyPassword} = require("../handlers/handlerUsers");
+const {sign} = require("../handlers/handlerjwt");
 router.post('/signin', async(req,res) => {
     try{
         let {ci, hashedpass} = req.body;
@@ -16,16 +13,16 @@ router.post('/signin', async(req,res) => {
             return res.status(400).json(errors(400, "The params ci, and hassed password "))
         }
         //validar user y pass;
-        let shearchUser= await handlerUser.signin(ci);
-        if(shearchUser.status ==200){
-            //aca existe el usuario 
+        let shearchUser= await signin(ci);
+        if(shearchUser.status === 200){
+            //aca existe el usuario
             let {ci, es_admin, contrasena} = shearchUser.data;
 
             if(contrasena !== hashedpass){
                 return res.status(400).json(errors(400,"The provided password is not correct."))
             }
-            let token = handlerJWT.sign(ci, es_admin);
-            if(token.status == 200){
+            let token = sign(ci, es_admin);
+            if(token.status === 200){
 
                 return res.status(200).json({token: token.token});
             }else{
@@ -51,8 +48,8 @@ router.patch('/changepass',authmw, async (req, res) => {
         if(ci === undefined || pass === undefined ){
             return res.status(404).json(errors(400, "The body is not in  correct format") );
         }
-        let result = await handlerUser.modifyPassword(ci,pass);
-        if(result.status == 200){
+        let result = await modifyPassword(ci,pass);
+        if(result.status === 200){
             //edit to add the token of the user
             return res.status(200).json(errors(200));
         }else{

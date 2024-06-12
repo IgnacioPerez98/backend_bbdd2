@@ -3,7 +3,6 @@ const app = express();
 const cors = require('cors');
 const http = require('http');
 const WebSocket = require('ws');
-const notifyService = require('./services/notificationservice')
 const dotenv = require('dotenv')
 
 dotenv.config();
@@ -39,58 +38,22 @@ app.use('/notify', notifyRoute);
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-notifyService.setWS(wss);
-notifyService.wsCreateCon();
+handlerNotification.setWS(wss);
+handlerNotification.wsCreateCon().then(
+    ok => console.log("Created WS")
+).catch(e => {
+    console.error(`Error wn ws : ${e}`)
+});
 
-notifyService.scheduleMatchNotification();
+handlerNotification.scheduleMatchNotification().then(
+    ok => console.log("Notification service running"),
+).catch( e => console.error(`Error wn ws : ${e}`) );
 
 
 //debug endpoints
 if (process.env.environment === 'DEBUG'){
-  const ps = require('./services/PostgresService')
-  app.post('/debug/clearpartidos', async (req,res)=>
-  {
-      await ps.getPool().query(`UPDATE partidos
-      SET id_ganador = NULL,
-          id_perdedor = NULL,
-          goles_ganador = NULL,
-          goles_perdedor = NULL,
-          penales_ganador = NULL,
-          penales_perdedor = NULL;
-      `);
-      return res.status(200).json({message: "OK"})
-  })
-
-  app.post('/debug/clearadvance', async (req, res)=>{
-     await ps.getPool().query(`UPDATE partidos
-      SET id_equipo1 = NULL,
-          id_equipo2 = NULL,
-          id_ganador = NULL,
-          id_perdedor = NULL,
-          goles_ganador = NULL,
-          goles_perdedor = NULL,
-          penales_ganador = NULL,
-          penales_perdedor = NULL
-          where id > 24;
-      `);
-      return res.status(200).json({message: "OK"})
-  })
-
-  app.post('/debug/restartpointsteams', async (req, res)=> {
-    await ps.getPool().query(`UPDATE posiciones
-      SET puntos = 0,
-          diferenciagoles = 0
-          where id_equipo < 32;
-      `);
-      return res.status(200).json({message: "OK"})
-  } ) 
-  app.post('/debug/restartpuntosuser', async (req, res)=> {
-    await ps.getPool().query(
-      `UPDATE puntos
-      SET puntos = 0;
-      `);
-      return res.status(200).json({message: "OK"})
-  } )
+    const debugRoute = require('./endpoints/debug')
+    app.use('/debug',debugRoute)
 }
 
 server.listen(3000, ()=>{

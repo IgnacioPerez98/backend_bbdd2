@@ -1,27 +1,26 @@
 \c backend;
---////////////////////////
---////DEFINE TABLES///////
---////////////////////////
 
+-- Create the sequence manually, set MINVALUE to 0, and start from 0
 CREATE SEQUENCE equipos_id_seq MINVALUE 0 START 0;
 
 create table equipos (
     id integer PRIMARY KEY DEFAULT nextval('equipos_id_seq'),
-    nombre_seleccion varchar(80) UNIQUE
+    nombre_seleccion varchar(80),
+    CONSTRAINT nombreunico UNIQUE (nombre_seleccion)
 );
 
 -- Alter the table to set the default value for the id column
 ALTER TABLE equipos ALTER COLUMN id SET DEFAULT nextval('equipos_id_seq');
 
 create table  usuario (
-    ci integer primary key,
+    ci integer primary key not null,
     username text not null,
     contrasena text not null,
     id_campeon integer,
-    id_subcampeon integer ,
+    id_subcampeon integer,
     es_admin integer default 0,
-    CONSTRAINT fk_campeon FOREIGN KEY(id_campeon) REFERENCES equipos(id),
-    CONSTRAINT fk_subcampeon FOREIGN KEY(id_subcampeon) REFERENCES equipos(id)
+    CONSTRAINT fk_id_e1 FOREIGN KEY(id_campeon) REFERENCES equipos(id),
+    CONSTRAINT fk_id_e2 FOREIGN KEY(id_subcampeon) REFERENCES equipos(id),
 );
 
 create table  partidos (
@@ -43,32 +42,38 @@ create table  partidos (
     CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
     CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_perdedor = id_equipo2),
     CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
-    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
+    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador ),
+    CONSTRAINT check_penales_ganador CHECK ( penales_ganador is null OR penales_ganador > penales_perdedor ),
+    CONSTRAINT check_penales_perdedor CHECK ( penales_perdedor is null OR penales_perdedor < penales_ganador ),
+    CONSTRAINT check_penales_not_null CHECK ( (penales_perdedor is null AND penales_ganador is null) OR (penales_perdedor is not null AND penales_ganador is not null) )
 );
 
 create table predicciones (
-    id serial primary key not null,
+    id serial primary key ,
     ci_usuario integer not null,
     id_partido integer,
     id_ganador integer,
     id_perdedor integer,
     goles_ganador integer,
     goles_perdedor integer,
-    penales_ganador integer,
-    penales_perdedor integer,
     CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido),
     CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
     CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
     CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
     CONSTRAINT fk_id_partido FOREIGN KEY(id_partido) REFERENCES partidos(id),
+    CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
+    CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_perdedor = id_equipo2),
     CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
-    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador )
-
+    CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador ),
+    CONSTRAINT check_penales_ganador CHECK ( penales_ganador is null OR penales_ganador > penales_perdedor ),
+    CONSTRAINT check_penales_perdedor CHECK ( penales_perdedor is null OR penales_perdedor < penales_ganador ),
+    CONSTRAINT check_penales_not_null CHECK ( (penales_perdedor is null AND penales_ganador is null) OR (penales_perdedor is not null AND penales_ganador is not null) )
 );
+
 
 --refers to users points
 create table puntos (
-    ci_usuario integer primary key not null,
+    ci_usuario integer primary key,
     puntos integer default 0,
     CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
     CONSTRAINT check_points CHECK (puntos >= 0)
@@ -81,9 +86,38 @@ create table posiciones (
     CONSTRAINT fk_id_partido FOREIGN KEY(id_equipo) REFERENCES equipos(id)
 );
 
---////////////////////////
---//////SETUP DATA////////
---////////////////////////
+--trigger 
+CREATE OR REPLACE FUNCTION puntaje_final() RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.id = 32 THEN
+        -- Award points to users who correctly predicted the champion
+        UPDATE puntos
+        SET puntos = puntos + 10
+        FROM usuario
+        WHERE usuario.id_campeon = NEW.id_ganador
+          AND puntos.ci_usuario = usuario.ci;
+
+        -- Award points to users who correctly predicted the runner-up
+        UPDATE puntos
+        SET puntos = puntos + 5
+        FROM usuario
+        WHERE usuario.id_subcampeon = NEW.id_perdedor
+          AND puntos.ci_usuario = usuario.ci;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_puntaje_final
+AFTER UPDATE ON partidos
+FOR EACH ROW
+EXECUTE FUNCTION puntaje_final();
+
+
+
+
+--Startup data
+
 
 --creo el admin
 --INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
