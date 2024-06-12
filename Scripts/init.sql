@@ -20,7 +20,7 @@ create table  usuario (
     id_subcampeon integer,
     es_admin integer default 0,
     CONSTRAINT fk_id_e1 FOREIGN KEY(id_campeon) REFERENCES equipos(id),
-    CONSTRAINT fk_id_e2 FOREIGN KEY(id_subcampeon) REFERENCES equipos(id),
+    CONSTRAINT fk_id_e2 FOREIGN KEY(id_subcampeon) REFERENCES equipos(id)
 );
 
 create table  partidos (
@@ -56,13 +56,13 @@ create table predicciones (
     id_perdedor integer,
     goles_ganador integer,
     goles_perdedor integer,
+    penales_ganador integer,
+    penales_perdedor integer,
     CONSTRAINT onecibyteam UNIQUE (ci_usuario, id_partido),
     CONSTRAINT fk_usuario FOREIGN KEY(ci_usuario) REFERENCES usuario(ci),
     CONSTRAINT fk_id_g FOREIGN KEY(id_ganador) REFERENCES equipos(id),
     CONSTRAINT fk_id_p FOREIGN KEY(id_perdedor) REFERENCES equipos(id),
     CONSTRAINT fk_id_partido FOREIGN KEY(id_partido) REFERENCES partidos(id),
-    CONSTRAINT check_idwinner CHECK (id_ganador = id_equipo1 OR id_ganador = id_equipo2),
-    CONSTRAINT check_idlooser CHECK (id_perdedor = id_equipo1 OR id_perdedor = id_equipo2),
     CONSTRAINT check_goles_ganador CHECK (goles_ganador >= goles_perdedor ),
     CONSTRAINT check_goles_perdedor CHECK (goles_perdedor <= goles_ganador ),
     CONSTRAINT check_penales_ganador CHECK ( penales_ganador is null OR penales_ganador > penales_perdedor ),
