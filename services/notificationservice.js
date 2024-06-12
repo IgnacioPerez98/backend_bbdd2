@@ -7,7 +7,7 @@ const {getIdsWithoutResult} = require("../handlers/handlerPredictions");
 let wsocket;
 
 /**
- * Clientes es un amp de ci, al ws de cada miembre.
+ * Clientes es un map de ci, al ws de cada miembre.
  * Se añaden propiedades al objeto:
  *      userdata => cada propiedad que se almacena en la tabla usuarios
  *      
@@ -60,8 +60,8 @@ const setWS = (wss) =>{
 const Notify = (texto, id,eventType) =>{
     try { 
         if(id === undefined || id === null){
-        //no se define es un broadcast
-        wsocket.send(texto);
+            //no se define es un broadcast
+            wsocket.clients.forEach(cli => cli.send(JSON.stringify({eventType: "Broadcast",message: `${texto}`})))
         }else{
             let wscliente = clients.get(id);
             if(wscliente !== undefined){
@@ -71,8 +71,11 @@ const Notify = (texto, id,eventType) =>{
                 }))
             }
         }
+
+        return {status: 200, error: "None"}
     } catch (error) {
         console.log("Error on Notify function: ",error);
+        return {status: 500, error: error.toString()}
     }
 }
 

@@ -16,7 +16,8 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-
+//handler
+const handlerNotification = require("./services/notificationservice");
 //endpoints 
 const signupRouter = require('./endpoints/signup');
 const signinRouter = require('./endpoints/signin')
