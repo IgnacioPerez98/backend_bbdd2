@@ -117,10 +117,8 @@ EXECUTE FUNCTION puntaje_final();
 
 
 --Startup data
-
-
 --creo el admin
---INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( -1, "Admin", "Admin", -1,-1,1);
+INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( 666, 'admin@test.com', 'admin', 0,1,1);
 
 --Agrego los Equipos
 INSERT INTO equipos (nombre_seleccion) VALUES 
