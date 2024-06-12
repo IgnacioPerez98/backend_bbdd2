@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b19f677b-28f8-4a69-a674-da9b058aa857",
+		"_postman_id": "432546e4-626d-41b7-b3a5-043df4089739",
 		"name": "Bases de Datos 2 - API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26276677"
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 1,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
+							"raw": "{\n    \"ci\": 1,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 8,\n    \"id_subchampion\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -128,7 +128,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 3,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
+							"raw": "{\n    \"ci\": 3,\n    \"username\": \"Solo Campeon\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -156,7 +156,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 2,\n    \"username\": \"Campoen\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 11,\n    \"id_subchampion\": 0\n}",
+							"raw": "{\n    \"ci\": 2,\n    \"username\": \"Solo SubCampeon\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 11,\n    \"id_subchampion\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -184,7 +184,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"ci\": 4,\n    \"username\": \"Nacho Perez\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 0\n}",
+							"raw": "{\n    \"ci\": 4,\n    \"username\": \"CampeonYSubcampeon\",\n    \"pass\": \"Crack\",\n    \"id_champion\": 9,\n    \"id_subchampion\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2174,6 +2174,39 @@
 							"path": [
 								"debug",
 								"restartpuntosuser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notify",
+			"item": [
+				{
+					"name": "SendNotificationbyEndpoint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"hola a todos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{endpoint}}/notify/notificar",
+							"protocol": "http",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"notify",
+								"notificar"
 							]
 						}
 					},
