@@ -24,7 +24,9 @@ const signinRouter = require('./endpoints/signin')
 const preditcionRouter = require('./endpoints/predictions');
 const teamsRouter = require('./endpoints/teams');
 const matchesRouter = require('./endpoints/matches');
-const scoreboardRoute = require('./endpoints/scoreboards')
+const scoreboardRoute = require('./endpoints/scoreboards');
+const notifyRoute = require('./endpoints/notification');
+
 //add Routes
 app.use('/prediction', preditcionRouter);
 app.use('/signup',signupRouter );
@@ -32,6 +34,7 @@ app.use('/selections', teamsRouter);
 app.use('/matches', matchesRouter);
 app.use('/scoreboards', scoreboardRoute);
 app.use('/signin', signinRouter);
+app.use('/notify', notifyRoute);
 
 
 const server = http.createServer(app);

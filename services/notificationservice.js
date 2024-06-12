@@ -5,6 +5,13 @@ const handlerPredicciones = require('../handlers/handlerPredictions')
 
 
 let wsocket;
+
+/**
+ * Clientes es un amp de ci, al ws de cada miembre.
+ * Se añaden propiedades al objeto:
+ *      userdata => cada propiedad que se almacena en la tabla usuarios
+ *      
+ */
 const clients = new Map();
 
 const wsCreateCon = async () => {
@@ -12,20 +19,17 @@ const wsCreateCon = async () => {
 
         ws.on('message', async (message) => {
             try {
-                const data = JSON.parse(message);
-                switch (data.type){
+                const {type, ci} = JSON.parse(message);
+                switch (type){
                     case 'identify':
                         try{
                             // Store the WebSocket connection with the user ID
-                            clients.set(data.ciUser, ws);
-                            wsocket.userId = data.ciUser;
-                            let user = await userHandler.signin(data.ciUser);
-                            ws.userdata = user.data;
-                            Notify( JSON.stringify(
-                                {
-                                    eventType: `Geeting`,
-                                    message: `Welcome ${user.data.username}`
-                                }),null)
+                            let user = await userHandler.signin(ci);
+                            if(user.status === 200){
+                                ws.userdata = user.data;
+                                clients.set(ci, ws);
+                                Notify(`Bienvenido ${user.data.username}`, ci)
+                            }
                         }catch(error){
                             console.error('Error en funcion notificacion: ',error);
                         }
@@ -36,8 +40,8 @@ const wsCreateCon = async () => {
         }
         });
         ws.on('close', async () => {
-            console.log(`User ${ws.ciUser} disconnected`);
-            clients.delete(ws.ciUser)
+            console.log(`User ${ws.ci} disconnected`);
+            clients.delete(ws.ci)
         });
     });
 }
@@ -48,21 +52,27 @@ const setWS = (wss) =>{
     wsocket = wss;
 }
 
-const Notify = (texto, id) =>{
-    try {
-        wsocket.clients.forEach((client) => {
-            id = []
-            if(id === undefined || id === null){
-                //no se define es un broadcast
-                client.send(texto);
-            }else{
-                if(id.contains(client.userId)){
-                    client.send(texto);
-                }
+/**
+ * Envia una notiificacion a treavez de un  web socket
+ * @param {*} texto 
+ * @param {*} id es un id que corresponde a la cedula de un cliente.
+ */
+const Notify = (texto, id,eventType) =>{
+    try { 
+        if(id === undefined || id === null){
+        //no se define es un broadcast
+        wsocket.send(texto);
+        }else{
+            let wscliente = clients.get(id);
+            if(wscliente !== undefined){
+                wscliente.send(JSON.stringify({
+                    eventType: eventType===undefined?`Notification`:`${eventType}`,
+                    message: `${texto}`
+                }))
             }
-        });
+        }
     } catch (error) {
-        console.log(error);
+        console.log("Error on Notify function: ",error);
     }
 }
 
