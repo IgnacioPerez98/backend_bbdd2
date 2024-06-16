@@ -196,4 +196,4 @@ INSERT INTO partidos (fecha, etapa, id_equipo1, id_equipo2) VALUES
 
 
 --creo el admin
-INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( 666, 'admin@test.com', 'admin', 0,1,1);
+INSERT INTO usuario(ci, username, contrasena, id_campeon, id_subcampeon, es_admin) VALUES ( 666, 'admin@test.com', 'x61Ey612Kl2gpFL56FT9weDnpSo4AV8j8+qx2AuTHdRyY036xxzTTrw10Wq3+4qQyB+XURPWx1ONxp3Y3pB37A==', 0,1,1); --Pass: admin
