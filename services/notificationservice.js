@@ -28,7 +28,6 @@ const wsCreateCon = async () => {
                             if(user.status === 200){
                                 ws.userdata = user.data;
                                 clients.set(ci, ws);
-                                Notify(`Bienvenido ${user.data.username}`, ci)
                             }
                         }catch(error){
                             console.error('Error en funcion notificacion: ',error);
